@@ -1,5 +1,5 @@
 // api/enedis-auth.js
-// Lance le flux OAuth2 Enedis — URLs mises à jour 2025
+// ✅ redirect_URI avec I MAJUSCULE — requis par Enedis en production
 
 module.exports = function handler(req, res) {
   const pdl = req.query && req.query.pdl;
@@ -18,18 +18,19 @@ module.exports = function handler(req, res) {
     });
   }
 
-  // Durée ISO 8601 : 1 an = P1Y (format requis par la nouvelle API)
-  const duration = 'P1Y';
+  // ✅ URL de consentement Enedis production
+  // ✅ redirect_URI avec I MAJUSCULE — c'est volontaire, Enedis est non-standard
+  const base = 'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize';
 
-  // ✅ URL de consentement — valide en 2025
-  const base   = 'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize';
   const params = new URLSearchParams({
     client_id:     clientId,
     response_type: 'code',
-    redirect_uri:  redirectUri,
+    redirect_URI:  redirectUri,   // ← I MAJUSCULE intentionnel
     state:         pdl,
-    duration:      duration,
+    duration:      'P1Y',
   });
+
+  console.log('[enedis-auth] Redirection vers:', base + '?' + params.toString());
 
   return res.redirect(302, base + '?' + params.toString());
 };

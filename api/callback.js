@@ -1,17 +1,20 @@
 // api/callback.js
-// Reçoit le code Enedis et récupère les données — URLs mises à jour 2025
+// ✅ URLs correctes : gw.prd.api.enedis.fr + redirect_URI majuscule
 
 module.exports = async function handler(req, res) {
+
+  console.log('[callback] Démarrage, query:', JSON.stringify(req.query));
+
   const code  = req.query && req.query.code;
   const pdl   = req.query && req.query.state;
   const error = req.query && req.query.error;
 
   if (error) {
+    console.log('[callback] Refus:', error);
     return res.redirect(302, '/?error=access_denied');
   }
-  if (!code || !pdl) {
-    return res.redirect(302, '/?error=missing_params');
-  }
+  if (!code) return res.redirect(302, '/?error=no_code');
+  if (!pdl)  return res.redirect(302, '/?error=no_pdl');
 
   const clientId     = process.env.ENEDIS_CLIENT_ID;
   const clientSecret = process.env.ENEDIS_CLIENT_SECRET;
@@ -22,31 +25,44 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    // ── 1. Échanger le code contre un access_token ──
-    // ✅ Nouvelle URL token 2025
-    const tokenUrl  = 'https://ext.prod.api.enedis.fr/oauth2/v3/token';
+    // ── 1. Échange du code contre un access_token ──
+    // ✅ gw.prd.api.enedis.fr — URL correcte confirmée
+    // ✅ redirect_uri en query string (pas dans le body)
+    const tokenUrl = 'https://gw.prd.api.enedis.fr/v1/oauth2/token'
+      + '?redirect_uri=' + encodeURIComponent(redirectUri);
+
     const tokenBody = new URLSearchParams({
       grant_type:    'authorization_code',
       client_id:     clientId,
       client_secret: clientSecret,
       code:          code,
-      redirect_uri:  redirectUri,
     });
 
-    const tokenRes = await fetch(tokenUrl + '?redirect_uri=' + encodeURIComponent(redirectUri), {
+    console.log('[callback] Appel token:', tokenUrl);
+
+    const tokenRes  = await fetch(tokenUrl, {
       method:  'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body:    tokenBody.toString(),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept':       'application/json',
+      },
+      body: tokenBody.toString(),
     });
+
+    const tokenText = await tokenRes.text();
+    console.log('[callback] Token status:', tokenRes.status);
+    console.log('[callback] Token body:', tokenText.substring(0, 400));
 
     if (!tokenRes.ok) {
-      const errText = await tokenRes.text();
-      console.error('[callback] Token error:', tokenRes.status, errText);
-      return res.redirect(302, '/?error=token_failed');
+      return res.redirect(302, '/?error=token_failed&status=' + tokenRes.status);
     }
 
-    const tokenData                              = await tokenRes.json();
+    const tokenData                               = JSON.parse(tokenText);
     const { access_token, refresh_token, expires_in } = tokenData;
+
+    if (!access_token) {
+      return res.redirect(302, '/?error=no_access_token');
+    }
 
     // ── 2. Récupérer 30 jours de consommation ──
     const now   = new Date();
@@ -54,25 +70,29 @@ module.exports = async function handler(req, res) {
     start.setDate(start.getDate() - 30);
     const fmt = function(d) { return d.toISOString().split('T')[0]; };
 
-    // ✅ Nouvelle URL données 2025
+    // ✅ gw.prd.api.enedis.fr/v3 — URL correcte confirmée
     const dataUrl =
-      'https://ext.prod.api.enedis.fr/metering_data_dc/v5/daily_consumption' +
+      'https://gw.prd.api.enedis.fr/v3/metering_data/daily_consumption' +
       '?usage_point_id=' + pdl +
       '&start=' + fmt(start) +
       '&end='   + fmt(now);
 
-    const dataRes = await fetch(dataUrl, {
-      headers: {
-        'Authorization': 'Bearer ' + access_token,
-        'Accept':        'application/json',
-      },
-    });
+    console.log('[callback] Appel données:', dataUrl);
 
     let energyData = null;
-    if (dataRes.ok) {
-      energyData = await dataRes.json();
-    } else {
-      console.error('[callback] Data error:', dataRes.status, await dataRes.text());
+    try {
+      const dataRes  = await fetch(dataUrl, {
+        headers: {
+          'Authorization': 'Bearer ' + access_token,
+          'Accept':        'application/json',
+        },
+      });
+      const dataText = await dataRes.text();
+      console.log('[callback] Data status:', dataRes.status);
+      console.log('[callback] Data body:', dataText.substring(0, 400));
+      if (dataRes.ok) energyData = JSON.parse(dataText);
+    } catch (dataErr) {
+      console.log('[callback] Erreur données (non bloquant):', dataErr.message);
     }
 
     // ── 3. Encoder et rediriger ──
@@ -80,14 +100,15 @@ module.exports = async function handler(req, res) {
       pdl:           pdl,
       access_token:  access_token,
       refresh_token: refresh_token || null,
-      expires_at:    Date.now() + (expires_in || 3600) * 1000,
+      expires_at:    Date.now() + (expires_in || 10800) * 1000,
       data:          energyData,
     })).toString('base64');
 
+    console.log('[callback] ✅ Succès — redirection avec données');
     return res.redirect(302, '/?connected=true&payload=' + encodeURIComponent(payload));
 
   } catch (err) {
-    console.error('[callback] Error:', err.message);
-    return res.redirect(302, '/?error=server_error');
+    console.log('[callback] ERREUR:', err.message);
+    return res.redirect(302, '/?error=server_error&msg=' + encodeURIComponent(err.message));
   }
 };

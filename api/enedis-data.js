@@ -1,6 +1,5 @@
 // api/enedis-data.js
-// Rafraîchit les données Linky — URLs mises à jour 2025
-// POST /api/enedis-data  body: { access_token, pdl, type, start, end }
+// ✅ URLs correctes : gw.prd.api.enedis.fr/v3
 
 module.exports = async function handler(req, res) {
 
@@ -31,17 +30,17 @@ module.exports = async function handler(req, res) {
   const startDate = start ? fmt(start) : fmt(ago30);
   const endDate   = end   ? fmt(end)   : fmt(today);
 
-  // ✅ Nouvelles URLs données 2025
+  // ✅ gw.prd.api.enedis.fr/v3 — URLs correctes confirmées
   const endpoints = {
-    'daily_consumption':           'metering_data_dc/v5/daily_consumption',
-    'daily_consumption_max_power': 'metering_data_dcmp/v5/daily_consumption_max_power',
-    'consumption_load_curve':      'metering_data_clc/v5/consumption_load_curve',
+    'daily_consumption':           'daily_consumption',
+    'daily_consumption_max_power': 'consumption_max_power',
+    'consumption_load_curve':      'consumption_load_curve',
   };
 
-  const path = endpoints[type] || endpoints['daily_consumption'];
+  const path = endpoints[type] || 'daily_consumption';
 
   const apiUrl =
-    'https://ext.prod.api.enedis.fr/' + path +
+    'https://gw.prd.api.enedis.fr/v3/metering_data/' + path +
     '?usage_point_id=' + pdl +
     '&start=' + startDate +
     '&end='   + endDate;
