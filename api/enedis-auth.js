@@ -1,10 +1,9 @@
 // api/enedis-auth.js
-// Lance le flux OAuth2 Enedis — redirige l'utilisateur vers la page d'autorisation
+// Lance le flux OAuth2 Enedis — URLs mises à jour 2025
 
 module.exports = function handler(req, res) {
   const pdl = req.query && req.query.pdl;
 
-  // Valider le PDL (14 chiffres)
   if (!pdl || !/^\d{14}$/.test(pdl)) {
     return res.status(400).json({ error: 'PDL invalide — 14 chiffres requis' });
   }
@@ -14,16 +13,16 @@ module.exports = function handler(req, res) {
 
   if (!clientId || !redirectUri) {
     return res.status(500).json({
-      error: 'Variables d\'environnement manquantes',
-      hint: 'Vérifiez ENEDIS_CLIENT_ID et ENEDIS_REDIRECT_URI dans Vercel'
+      error: 'Variables manquantes',
+      hint:  'Vérifiez ENEDIS_CLIENT_ID et ENEDIS_REDIRECT_URI dans Vercel'
     });
   }
 
-  // Durée d'accès : 1 an (en secondes)
-  const duration = String(365 * 24 * 3600);
+  // Durée ISO 8601 : 1 an = P1Y (format requis par la nouvelle API)
+  const duration = 'P1Y';
 
-  // Construire l'URL d'autorisation avec URLSearchParams (WHATWG — pas d'url.parse)
-  const base = 'https://espace-client-particuliers.enedis.fr/group/espace-particuliers/consentement-linky/oauth2/authorize';
+  // ✅ URL de consentement — valide en 2025
+  const base   = 'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize';
   const params = new URLSearchParams({
     client_id:     clientId,
     response_type: 'code',
@@ -32,8 +31,5 @@ module.exports = function handler(req, res) {
     duration:      duration,
   });
 
-  const authUrl = base + '?' + params.toString();
-
-  // Rediriger l'utilisateur vers Enedis
-  return res.redirect(302, authUrl);
+  return res.redirect(302, base + '?' + params.toString());
 };

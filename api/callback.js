@@ -1,17 +1,14 @@
 // api/callback.js
-// Enedis redirige ici après autorisation de l'utilisateur
-// Échange le code contre un token, puis récupère les données
+// Reçoit le code Enedis et récupère les données — URLs mises à jour 2025
 
 module.exports = async function handler(req, res) {
   const code  = req.query && req.query.code;
   const pdl   = req.query && req.query.state;
   const error = req.query && req.query.error;
 
-  // L'utilisateur a refusé
   if (error) {
     return res.redirect(302, '/?error=access_denied');
   }
-
   if (!code || !pdl) {
     return res.redirect(302, '/?error=missing_params');
   }
@@ -26,7 +23,8 @@ module.exports = async function handler(req, res) {
 
   try {
     // ── 1. Échanger le code contre un access_token ──
-    const tokenUrl  = 'https://gw.prd.api.enedis.fr/v1/oauth2/token';
+    // ✅ Nouvelle URL token 2025
+    const tokenUrl  = 'https://ext.prod.api.enedis.fr/oauth2/v3/token';
     const tokenBody = new URLSearchParams({
       grant_type:    'authorization_code',
       client_id:     clientId,
@@ -35,7 +33,7 @@ module.exports = async function handler(req, res) {
       redirect_uri:  redirectUri,
     });
 
-    const tokenRes = await fetch(tokenUrl, {
+    const tokenRes = await fetch(tokenUrl + '?redirect_uri=' + encodeURIComponent(redirectUri), {
       method:  'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body:    tokenBody.toString(),
@@ -43,24 +41,22 @@ module.exports = async function handler(req, res) {
 
     if (!tokenRes.ok) {
       const errText = await tokenRes.text();
-      console.error('[callback] Token exchange failed:', tokenRes.status, errText);
+      console.error('[callback] Token error:', tokenRes.status, errText);
       return res.redirect(302, '/?error=token_failed');
     }
 
-    const tokenData = await tokenRes.json();
+    const tokenData                              = await tokenRes.json();
     const { access_token, refresh_token, expires_in } = tokenData;
 
-    // ── 2. Récupérer 30 jours de consommation journalière ──
+    // ── 2. Récupérer 30 jours de consommation ──
     const now   = new Date();
     const start = new Date(now);
     start.setDate(start.getDate() - 30);
+    const fmt = function(d) { return d.toISOString().split('T')[0]; };
 
-    const fmt = function(d) {
-      return d.toISOString().split('T')[0]; // YYYY-MM-DD
-    };
-
+    // ✅ Nouvelle URL données 2025
     const dataUrl =
-      'https://gw.prd.api.enedis.fr/v3/metering_data/daily_consumption' +
+      'https://ext.prod.api.enedis.fr/metering_data_dc/v5/daily_consumption' +
       '?usage_point_id=' + pdl +
       '&start=' + fmt(start) +
       '&end='   + fmt(now);
@@ -76,22 +72,22 @@ module.exports = async function handler(req, res) {
     if (dataRes.ok) {
       energyData = await dataRes.json();
     } else {
-      console.error('[callback] Data fetch failed:', dataRes.status);
+      console.error('[callback] Data error:', dataRes.status, await dataRes.text());
     }
 
-    // ── 3. Encoder et rediriger vers l'app ──
+    // ── 3. Encoder et rediriger ──
     const payload = Buffer.from(JSON.stringify({
-      pdl:          pdl,
-      access_token: access_token,
+      pdl:           pdl,
+      access_token:  access_token,
       refresh_token: refresh_token || null,
-      expires_at:   Date.now() + (expires_in || 3600) * 1000,
-      data:         energyData,
+      expires_at:    Date.now() + (expires_in || 3600) * 1000,
+      data:          energyData,
     })).toString('base64');
 
     return res.redirect(302, '/?connected=true&payload=' + encodeURIComponent(payload));
 
   } catch (err) {
-    console.error('[callback] Unexpected error:', err.message);
+    console.error('[callback] Error:', err.message);
     return res.redirect(302, '/?error=server_error');
   }
 };
