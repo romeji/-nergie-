@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
 
   try {
     // ── 1. Échanger le code contre un access_token ──
-    const tokenUrl  = 'https://gw.hml.api.enedis.fr/dataconnect/v1/oauth2/token';
+    const tokenUrl  = 'https://gw.hml.api.enedis.fr/v1/oauth2/token';
     const tokenBody = new URLSearchParams({
       grant_type:    'authorization_code',
       client_id:     clientId,
@@ -60,7 +60,7 @@ module.exports = async function handler(req, res) {
     };
 
     const dataUrl =
-      'https://gw.hml.api.enedis.fr/metering_data/v5/daily_consumption' +
+      'https://gw.hml.api.enedis.fr/v5/metering_data/daily_consumption' +
       '?usage_point_id=' + pdl +
       '&start=' + fmt(start) +
       '&end='   + fmt(now);
