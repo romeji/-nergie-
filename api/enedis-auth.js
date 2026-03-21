@@ -23,7 +23,7 @@ module.exports = function handler(req, res) {
   const duration = String(365 * 24 * 3600);
 
   // Construire l'URL d'autorisation avec URLSearchParams (WHATWG — pas d'url.parse)
-  const base = 'https://gw.hml.api.enedis.fr/group/espace-particuliers/consentement-linky/oauth2/authorize';
+  const base = 'https://espace-client-particuliers.enedis.fr/group/espace-particuliers/consentement-linky/oauth2/authorize';
   const params = new URLSearchParams({
     client_id:     clientId,
     response_type: 'code',

@@ -66,7 +66,7 @@ module.exports = async function handler(req, res) {
   }
 
   const apiUrl =
-    'https://gw.hml.api.enedis.fr/v5/metering_data/' + type +
+    'https://gw.prd.api.enedis.fr/v3/metering_data/' + type +
     '?usage_point_id=' + pdl +
     '&start=' + startDate +
     '&end='   + endDate;
