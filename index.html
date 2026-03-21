@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- ═══ SEO PRINCIPAL ═══ -->
+<title>EnergyX — Suivi de consommation énergétique en temps réel</title>
+<meta name="description" content="EnergyX connecte votre compteur Linky pour suivre votre consommation électrique en temps réel, détecter vos appareils par IA et comparer les offres des fournisseurs d'énergie.">
+<meta name="keywords" content="suivi consommation électrique, Linky, compteur intelligent, économie énergie, comparateur fournisseur, EDF, Engie, Octopus, NILM, IA énergie">
+<meta name="author" content="EnergyX">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://energyx.vercel.app/">
+
+<!-- ═══ PWA / MOBILE ═══ -->
+<meta name="theme-color" id="meta-theme" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EnergyX">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="EnergyX">
+<meta name="msapplication-TileColor" content="#5b8dee">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<!-- ═══ OPEN GRAPH (partage réseaux sociaux) ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://energyx.vercel.app/">
+<meta property="og:title" content="EnergyX — Suivi énergétique intelligent">
+<meta property="og:description" content="Connectez votre Linky, suivez votre consommation en temps réel, détectez vos appareils par IA et économisez sur votre facture électrique.">
+<meta property="og:image" content="https://energyx.vercel.app/og-image.png">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="EnergyX">
+
+<!-- ═══ TWITTER CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://energyx.vercel.app/">
+<meta name="twitter:title" content="EnergyX — Suivi énergétique intelligent">
+<meta name="twitter:description" content="Connectez votre Linky, suivez votre consommation en temps réel et économisez sur votre facture électrique.">
+<meta name="twitter:image" content="https://energyx.vercel.app/og-image.png">
+
+<!-- ═══ PWA MANIFEST ═══ -->
+<link rel="manifest" id="pwa-manifest" href="#">
+
+<!-- ═══ FAVICONS ═══ -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%235b8dee'/><stop offset='100%25' stop-color='%232ec4b6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><path d='M58 12L28 52h22L46 88L72 48H50L58 12z' fill='white'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%235b8dee'/><stop offset='100%25' stop-color='%232ec4b6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><path d='M58 12L28 52h22L46 88L72 48H50L58 12z' fill='white'/></svg>">
+
+<!-- ═══ GOOGLE FONTS ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- ═══ CHART.JS ═══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<!-- ═══════════════════════════════════════════
+   GOOGLE ADSENSE
+   ⚠️  AVANT DE DÉPLOYER :
+   1. Remplacez ca-pub-XXXXXXXXXX par votre
+      Publisher ID (adsense.google.com)
+   2. Remplacez les data-ad-slot par vos
+      vrais Ad Unit IDs
+   3. Soumettez votre site pour validation
+   ═══════════════════════════════════════════ -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
+
+<!-- ═══ STRUCTURED DATA (SEO riche) ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EnergyX",
+  "description": "Plateforme de suivi énergétique intelligente avec IA de détection d'appareils et comparateur d'offres en temps réel.",
+  "url": "https://energyx.vercel.app",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "description": "Version gratuite avec publicités"
+  },
+  "featureList": [
+    "Suivi consommation temps réel via Linky",
+    "Détection d'appareils par IA (NILM)",
+    "Comparateur d'offres fournisseurs",
+    "Alertes personnalisées",
+    "Conseils d'économies IA"
+  ]
+}
+</script>
+<style>
+
+/* ══════════════════════════════════════════════════
+   ENERGYX v4 — Pure Neumorphism
+   LIGHT : #e8ecf0 bg, ombres blanc + gris doux
+   DARK  : #1e1e1e bg, ombres noir + gris foncé
+   ══════════════════════════════════════════════════ */
+
+:root {
+  /* ── FOND BLANC PUR ── */
+  --bg:      #ffffff;
+  --bg-2:    #ebebeb;   /* légèrement plus enfoncé */
+
+  /* ── OMBRES NEUMORPHIQUES calibrées sur blanc ── */
+  --s-out:   8px 8px 20px #d1d5db, -6px -6px 16px #ffffff;
+  --s-in:    inset 5px 5px 12px #d1d5db, inset -5px -5px 12px #ffffff;
+  --s-soft:  5px 5px 13px #d6dbe0, -4px -4px 11px #ffffff;
+  --s-press: inset 3px 3px 9px #d1d5db, inset -3px -3px 9px #ffffff;
+  --s-float: 10px 10px 30px #c8cdd4, -8px -8px 22px #ffffff;
+
+  /* ── ACCENTS ── */
+  --blue:   #5b8dee;
+  --teal:   #2ec4b6;
+  --amber:  #ffa040;
+  --rose:   #ff6b88;
+  --green:  #4cd97b;
+  --purple: #a78bfa;
+  --yellow: #ffd166;
+
+  /* ── TEXTE ── */
+  --t1: #2c3e50;
+  --t2: #7f8c99;
+  --t3: #b0bac4;
+
+  /* ── MISE EN PAGE ── */
+  --r:     22px;
+  --r-sm:  14px;
+  --r-xs:  10px;
+  --r-pill:999px;
+  --ff:   'Nunito', sans-serif;
+  --fm:   'DM Mono', monospace;
+  --nav:   74px;
+  --top:   58px;
+  --sb:    env(safe-area-inset-bottom, 0px);
+  --mw:    430px;
+}
+
+[data-theme="dark"] {
+  --bg:    #1e1e1e;
+  --bg-2:  #181818;
+
+  --s-out:   8px 8px 18px #141414, -5px -5px 14px #282828;
+  --s-in:    inset 5px 5px 12px #141414, inset -4px -4px 10px #282828;
+  --s-soft:  5px 5px 12px #141414, -4px -4px 10px #282828;
+  --s-press: inset 3px 3px 8px #141414, inset -3px -3px 8px #282828;
+  --s-float: 10px 10px 28px #0e0e0e, -6px -6px 18px #2a2a2a;
+
+  --t1: #e8eaed;
+  --t2: #6e7a86;
+  --t3: #3a4450;
+}
+
+/* ══ RESET ══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+body{font-family:var(--ff);background:var(--bg);color:var(--t1);min-height:100dvh;overflow-x:hidden;line-height:1.5;transition:background .4s,color .4s;font-size:15px;}
+button{cursor:pointer;border:none;background:none;font-family:var(--ff);}
+input,select{font-family:var(--ff);}
+::-webkit-scrollbar{width:0;}
+
+/* ══ DESKTOP SHELL (> 480px) ══
+   Fond gris autour du phone blanc
+   ──────────────────────────── */
+@media (min-width:480px) {
+  body {
+    background: #f0f2f5;
+  }
+  [data-theme="dark"] body,
+  body[data-theme="dark"] {
+    background: #0a0a0a;
+  }
+}
+
+/* ══ TOPBAR ══ */
+.topbar{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--mw);height:var(--top);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;z-index:200;
+}
+
+/* Desktop : ombre sous la topbar pour séparer du fond gris */
+@media (min-width:480px) {
+  .topbar {
+    border-radius:0 0 20px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  }
+}
+
+.logo{display:flex;align-items:center;gap:11px;}
+.logo-orb{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--bg);box-shadow:var(--s-out);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.logo-name{font-size:1.05rem;font-weight:900;color:var(--t1);letter-spacing:-.5px;}
+.logo-sub{font-size:.5rem;font-weight:600;color:var(--t3);letter-spacing:1.8px;text-transform:uppercase;font-family:var(--fm);margin-top:1px;}
+.t-r{display:flex;align-items:center;gap:8px;}
+
+/* ── icon button ── */
+.ib{
+  width:38px;height:38px;border-radius:13px;
+  background:var(--bg);box-shadow:var(--s-soft);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--t2);transition:box-shadow .18s;
+}
+.ib:active{box-shadow:var(--s-press);}
+
+/* ── connection chip — masqué sur petits écrans < 360px ── */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:var(--r-pill);
+  background:var(--bg);box-shadow:var(--s-in);
+  font-size:.64rem;font-weight:700;font-family:var(--fm);
+  color:var(--t3);transition:color .3s;
+}
+@media (max-width:359px) { .chip { display:none; } }
+.chip.ok{color:var(--green);}
+.chip.demo{color:var(--amber);}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.chip.ok .chip-dot,.chip.demo .chip-dot{animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ══ MAIN ══ */
+main{
+  padding-top:var(--top);
+  padding-bottom:calc(var(--nav) + var(--sb) + 12px);
+  max-width:var(--mw);margin:0 auto;
+  /* fond blanc de l'app sur desktop */
+  background:var(--bg);
+  min-height:100dvh;
+  position:relative;
+}
+
+/* Desktop : ombre latérale pour effet "phone" */
+@media (min-width:480px) {
+  main {
+    box-shadow: 0 0 60px rgba(0,0,0,.12);
+  }
+}
+
+.scr{
+  display:none;
+  /* Padding adaptatif */
+  padding:12px clamp(14px, 4vw, 20px) 28px;
+  animation:pin .3s ease;
+}
+.scr.on{display:block;}
+@keyframes pin{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ BOTTOM NAV ══ */
+.bnav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--mw);
+  height:calc(var(--nav) + var(--sb));
+  padding:0 clamp(4px, 2vw, 12px) var(--sb);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:200;
+}
+
+/* Desktop */
+@media (min-width:480px) {
+  .bnav {
+    border-radius:20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+  }
+}
+
+.bnav::before{
+  content:'';position:absolute;top:0;left:20px;right:20px;height:1px;
+  background:var(--bg-2);opacity:.8;
+}
+.nb{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  flex:1;padding:4px 0;color:var(--t3);transition:color .2s;position:relative;
+}
+.nb-w{
+  /* Taille adaptative selon l'écran */
+  width:clamp(38px, 10vw, 48px);
+  height:clamp(38px, 10vw, 48px);
+  border-radius:clamp(12px, 3vw, 16px);
+  background:var(--bg);box-shadow:var(--s-soft);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .28s;
+}
+.nb-w svg{
+  width:clamp(16px, 4.5vw, 20px);
+  height:clamp(16px, 4.5vw, 20px);
+  transition:stroke .25s;
+}
+.nb.on .nb-w{
+  box-shadow:var(--s-press);
+  background:linear-gradient(145deg, var(--blue), #7aa8ff);
+}
+.nb.on .nb-w svg{stroke:#fff;}
+.nb.on{color:var(--blue);}
+.nb-l{
+  font-size:clamp(.48rem, 1.8vw, .6rem);
+  font-weight:700;text-transform:uppercase;letter-spacing:.3px;
+}
+.nb-badge{
+  position:absolute;top:3px;right:calc(50% - clamp(22px,6vw,28px));
+  width:8px;height:8px;border-radius:50%;
+  background:var(--rose);box-shadow:0 0 0 2px var(--bg);
+  display:none;
+}
+
+/* ══ SECTIONS HEADING ══ */
+.sh{
+  font-size:.62rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--t3);font-family:var(--fm);
+  margin:22px 0 12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sh:first-child{margin-top:4px;}
+.sh-a{font-size:.68rem;font-weight:700;color:var(--blue);letter-spacing:0;text-transform:none;cursor:pointer;}
+
+/* ══ CARDS ══ */
+.card{
+  background:var(--bg);border-radius:var(--r);
+  box-shadow:var(--s-out);padding:20px;margin-bottom:14px;
+}
+.card-in{
+  background:var(--bg);border-radius:var(--r);
+  box-shadow:var(--s-in);padding:16px;margin-bottom:14px;
+}
+
+/* ══ GATE (écran vide) ══ */
+.gate{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:48px 12px 20px;}
+.gate-orb{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--bg);box-shadow:var(--s-float);
+  display:flex;align-items:center;justify-content:center;
+}
+.gate-orb-in{
+  width:68px;height:68px;border-radius:50%;
+  background:var(--bg);box-shadow:var(--s-in);
+  display:flex;align-items:center;justify-content:center;
+}
+.gate-title{font-size:1.55rem;font-weight:900;color:var(--t1);letter-spacing:-.5px;line-height:1.25;}
+.gate-sub{font-size:.88rem;color:var(--t2);line-height:1.7;max-width:255px;}
+
+/* ══ BUTTONS ══ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:var(--r-pill);font-family:var(--ff);font-weight:700;
+  transition:all .2s;cursor:pointer;border:none;
+}
+/* convex primary */
+.btn-p{
+  padding:15px 28px;font-size:.93rem;width:100%;
+  background:var(--bg);color:var(--blue);
+  box-shadow:var(--s-out);
+}
+.btn-p:active{box-shadow:var(--s-press);}
+/* gradient accent */
+.btn-a{
+  padding:15px 28px;font-size:.93rem;width:100%;
+  background:linear-gradient(145deg,var(--blue),#7aa8ff);
+  color:#fff;
+  box-shadow:0 8px 22px rgba(91,141,238,.35),var(--s-soft);
+}
+.btn-a:active{transform:scale(.98);}
+/* ghost */
+.btn-g{
+  padding:12px 22px;font-size:.86rem;
+  background:var(--bg);color:var(--t2);
+  box-shadow:var(--s-soft);border-radius:var(--r-pill);
+}
+.btn-g:active{box-shadow:var(--s-press);}
+/* demo */
+.btn-d{
+  padding:14px 28px;font-size:.9rem;width:100%;
+  background:var(--bg);color:var(--amber);
+  box-shadow:var(--s-soft);border-radius:var(--r-pill);
+  font-weight:700;
+}
+.btn-d:active{box-shadow:var(--s-press);}
+/* danger */
+.btn-danger{padding:12px 22px;font-size:.86rem;background:var(--bg);color:var(--rose);box-shadow:var(--s-soft);border-radius:var(--r-pill);font-weight:700;}
+.btn-danger:active{box-shadow:var(--s-press);}
+.btn-sm{padding:9px 18px;font-size:.8rem;}
+.btn-xs{padding:6px 12px;font-size:.74rem;}
+.btn-full{width:100%;}
+
+/* ══ TILES 2-COL ══ */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.tile{
+  background:var(--bg);border-radius:var(--r);
+  box-shadow:var(--s-out);padding:18px 16px;
+  display:flex;flex-direction:column;gap:7px;
+}
+.tile-lbl{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);font-family:var(--fm);}
+.tile-val{font-size:1.9rem;font-weight:900;line-height:1;letter-spacing:-1px;font-family:var(--fm);}
+.tile-unit{font-size:.74rem;color:var(--t2);}
+.tile-trend{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.66rem;font-weight:700;padding:3px 9px;
+  border-radius:var(--r-pill);width:fit-content;
+  font-family:var(--fm);background:var(--bg);box-shadow:var(--s-in);margin-top:2px;
+}
+
+/* ══════════════════════════════════════
+   GRAPHIQUES CAPSULES — style fitness app
+   Barres arrondies colorées sur fond creux
+══════════════════════════════════════ */
+.caps-wrap{
+  display:flex;align-items:flex-end;justify-content:space-around;
+  gap:14px;padding:8px 4px 12px;
+}
+.cap-col{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  flex:1;
+}
+.cap-track{
+  /* creux neumorphique */
+  width:100%;max-width:46px;height:100px;
+  border-radius:50px;
+  background:var(--bg);
+  box-shadow:var(--s-in);
+  overflow:hidden;
+  display:flex;align-items:flex-end;
+  position:relative;
+}
+/* La capsule colorée à l'intérieur */
+.cap-fill{
+  width:100%;
+  border-radius:50px;
+  transition:height 1.3s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+/* Reflet lumineux sur la capsule */
+.cap-fill::after{
+  content:'';position:absolute;
+  top:8px;left:50%;transform:translateX(-50%);
+  width:40%;height:28%;
+  background:rgba(255,255,255,.35);
+  border-radius:50px;
+  filter:blur(2px);
+}
+.cap-val{font-size:.78rem;font-weight:800;font-family:var(--fm);color:var(--t1);}
+.cap-lbl{font-size:.62rem;font-weight:700;color:var(--t2);letter-spacing:.4px;}
+
+/* ══ DONUT RING — style fitness app ══ */
+.donut-wrap{
+  position:relative;
+  width:clamp(140px, 38vw, 170px);
+  height:clamp(140px, 38vw, 170px);
+  margin:0 auto;
+  filter:drop-shadow(0 4px 16px rgba(91,141,238,.18));
+}
+.donut-wrap svg{transform:rotate(-90deg);width:100%;height:100%;}
+.donut-center{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;
+}
+.donut-val{font-family:var(--fm);font-size:clamp(1.6rem,4.5vw,2rem);font-weight:900;color:var(--t1);line-height:1;}
+.donut-lbl{font-size:.58rem;font-family:var(--fm);color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;}
+
+/* ══ HC WIDGET ══ */
+.hc-row{display:flex;align-items:center;gap:14px;}
+.hc-orb{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--bg);box-shadow:var(--s-out);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.hc-body{flex:1;}
+.hc-title{font-size:.9rem;font-weight:700;margin-bottom:2px;}
+.hc-sub{font-size:.75rem;color:var(--t2);}
+.hc-cd{font-family:var(--fm);font-size:.8rem;font-weight:700;color:var(--teal);margin-top:4px;}
+.hc-bar-bg{margin-top:10px;height:6px;border-radius:99px;background:var(--bg);box-shadow:var(--s-in);overflow:hidden;}
+.hc-bar-fg{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .6s ease;}
+
+/* ══ SCORE RING ══ */
+.score-row{display:flex;align-items:center;gap:18px;padding:4px 0;flex-wrap:wrap;}
+.score-ring{position:relative;width:clamp(100px,28vw,120px);height:clamp(100px,28vw,120px);flex-shrink:0;}
+.score-ring svg{transform:rotate(-90deg);width:100%;height:100%;}
+.score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.score-num{font-family:var(--fm);font-size:clamp(1.4rem,4vw,1.8rem);font-weight:900;color:var(--t1);line-height:1;}
+.score-sub{font-size:.52rem;font-family:var(--fm);color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:1px;}
+.score-grade{font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);background:var(--bg);box-shadow:var(--s-in);font-family:var(--fm);}
+.score-facts{flex:1;min-width:120px;display:flex;flex-direction:column;gap:9px;}
+.fact-row{display:flex;align-items:center;gap:8px;font-size:.77rem;}
+.fact-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+
+/* ══ FORECAST ══ */
+.fc-row{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;text-align:center;}
+.fc-div{background:var(--bg-2);}
+.fc-cell{padding:4px 6px;}
+.fc-l{font-size:.58rem;font-family:var(--fm);color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.fc-v{font-size:1.2rem;font-weight:900;font-family:var(--fm);}
+
+/* ══ LIST ROWS ══ */
+.lr{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--bg-2);}
+.lr:last-child{border-bottom:none;padding-bottom:0;} .lr:first-child{padding-top:0;}
+.lr-ic{width:38px;height:38px;border-radius:12px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.lr-b{flex:1;min-width:0;}
+.lr-t{font-size:.88rem;font-weight:600;color:var(--t1);}
+.lr-s{font-size:.73rem;color:var(--t2);margin-top:1px;line-height:1.4;}
+.lr-r{text-align:right;flex-shrink:0;}
+.lr-v{font-size:.88rem;font-weight:700;font-family:var(--fm);}
+
+/* ══ PILLS ══ */
+.pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.pill{
+  padding:8px 16px;border-radius:var(--r-pill);
+  font-size:.72rem;font-weight:700;font-family:var(--fm);
+  background:var(--bg);color:var(--t3);box-shadow:var(--s-soft);transition:all .2s;
+}
+.pill.on{
+  background:linear-gradient(145deg,var(--blue),#7aa8ff);
+  color:#fff;box-shadow:0 6px 16px rgba(91,141,238,.32);
+}
+.pill:active{box-shadow:var(--s-press);}
+
+/* ══ TOGGLE ══ */
+.tog{
+  width:52px;height:28px;border-radius:var(--r-pill);
+  background:var(--bg);box-shadow:var(--s-in);
+  position:relative;cursor:pointer;flex-shrink:0;
+}
+.tog::after{
+  content:'';position:absolute;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--bg);box-shadow:var(--s-soft);
+  top:4px;left:4px;
+  transition:left .26s cubic-bezier(.34,1.56,.64,1),background .26s;
+}
+.tog.on::after{
+  left:28px;
+  background:linear-gradient(145deg,var(--blue),#7aa8ff);
+  box-shadow:0 2px 8px rgba(91,141,238,.4);
+}
+
+/* ══ FORM ══ */
+.fg{margin-bottom:14px;}
+.fl{display:block;font-size:.66rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);font-family:var(--fm);margin-bottom:7px;}
+.fi{
+  width:100%;padding:13px 16px;
+  background:var(--bg);color:var(--t1);border:none;outline:none;
+  border-radius:var(--r-sm);box-shadow:var(--s-in);
+  font-size:.9rem;font-family:var(--ff);font-weight:500;
+  -webkit-appearance:none;transition:box-shadow .2s;
+}
+.fi:focus{box-shadow:var(--s-in),0 0 0 2.5px rgba(91,141,238,.22);}
+.fi::placeholder{color:var(--t3);}
+
+/* ══ ALERTS ══ */
+.al{
+  background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);
+  padding:15px 17px;margin-bottom:10px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.al-pip{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.al-pip.r{background:var(--rose);box-shadow:0 0 7px var(--rose);}
+.al-pip.a{background:var(--amber);box-shadow:0 0 7px var(--amber);}
+.al-pip.g{background:var(--green);box-shadow:0 0 7px var(--green);}
+.al-pip.b{background:var(--blue);box-shadow:0 0 7px var(--blue);}
+.al-pip.t{background:var(--teal);box-shadow:0 0 7px var(--teal);}
+.al-b{flex:1;min-width:0;}
+.al-t{font-size:.87rem;font-weight:700;color:var(--t1);margin-bottom:2px;}
+.al-d{font-size:.74rem;color:var(--t2);line-height:1.45;}
+.al-m{font-size:.62rem;font-family:var(--fm);color:var(--t3);margin-top:5px;}
+.al-x{width:28px;height:28px;border-radius:8px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:.74rem;color:var(--t3);flex-shrink:0;}
+.al-x:hover{color:var(--rose);}
+.al-rule{background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);padding:15px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
+.al-rule-ic{width:36px;height:36px;border-radius:11px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.al-rule-b{flex:1;}
+.al-rule-t{font-size:.87rem;font-weight:600;color:var(--t1);}
+.al-rule-s{font-size:.73rem;color:var(--t2);margin-top:1px;}
+
+/* ══ COMP ITEMS ══ */
+.ci{background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);padding:15px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.ci.best{box-shadow:var(--s-out),0 0 0 1.5px var(--blue);}
+.ci-rank{width:30px;height:30px;border-radius:50%;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--t2);font-family:var(--fm);flex-shrink:0;}
+.ci-rank.gold{background:linear-gradient(145deg,#f6d365,#fda085);box-shadow:0 4px 12px rgba(253,160,133,.35);color:#fff;}
+.ci-b{flex:1;min-width:0;}
+.ci-n{font-size:.9rem;font-weight:700;color:var(--t1);}
+.ci-o{font-size:.73rem;color:var(--t2);margin-top:1px;}
+.ci-r{text-align:right;flex-shrink:0;}
+.ci-p{font-size:.98rem;font-weight:800;font-family:var(--fm);}
+.ci-s{font-size:.67rem;font-family:var(--fm);margin-top:3px;}
+
+/* ══ DEVICE ROWS ══ */
+.dev-row{
+  background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);
+  padding:14px 16px;margin-bottom:10px;
+  display:flex;align-items:center;gap:12px;
+  position:relative;overflow:hidden;transition:opacity .3s;
+}
+.dev-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--dc,var(--blue));border-radius:0 3px 3px 0;}
+.dev-row.off{opacity:.5;}
+.dev-ic{width:40px;height:40px;border-radius:13px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.dev-b{flex:1;min-width:0;}
+.dev-n{font-size:.88rem;font-weight:700;color:var(--t1);}
+.dev-w{font-size:.71rem;font-family:var(--fm);color:var(--t2);margin-top:1px;}
+.dev-bg{margin-top:6px;height:4px;border-radius:99px;background:var(--bg);box-shadow:var(--s-in);overflow:hidden;}
+.dev-bf{height:100%;border-radius:99px;transition:width 1s ease;}
+.dev-r{text-align:right;flex-shrink:0;}
+.dev-pct{font-size:.82rem;font-weight:800;font-family:var(--fm);}
+.dev-st{font-size:.64rem;font-family:var(--fm);color:var(--t3);margin-top:2px;}
+
+/* ══ LEARNING BAR ══ */
+.lbar{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);border-radius:var(--r-pill);box-shadow:var(--s-in);
+  padding:8px 16px;margin-bottom:14px;
+}
+.lbar-track{flex:1;height:5px;border-radius:99px;background:var(--bg-2);overflow:hidden;}
+.lbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width 1s ease;}
+.lbar-lbl{font-size:.64rem;font-family:var(--fm);font-weight:700;color:var(--blue);white-space:nowrap;}
+
+/* ══ WATT RING ══ */
+.watt-ring{position:relative;width:clamp(136px,38vw,160px);height:clamp(136px,38vw,160px);margin:0 auto;}
+.watt-ring svg{transform:rotate(-90deg);width:100%;height:100%;}
+.watt-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.watt-v{font-family:var(--fm);font-size:clamp(1.8rem,5vw,2.2rem);font-weight:900;color:var(--t1);line-height:1;letter-spacing:-2px;transition:color .4s;}
+.watt-u{font-size:.7rem;font-family:var(--fm);color:var(--t2);}
+.watt-l{font-size:.58rem;font-family:var(--fm);color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.live-mini{height:80px;position:relative;width:100%;margin-top:8px;}
+
+/* ══ CONF BADGE ══ */
+.conf{display:inline-flex;align-items:center;padding:2px 8px;border-radius:var(--r-pill);background:var(--bg);box-shadow:var(--s-in);font-size:.63rem;font-family:var(--fm);font-weight:700;margin-top:3px;}
+.conf.hi{color:var(--green);} .conf.mid{color:var(--amber);} .conf.lo{color:var(--rose);}
+
+/* ══ AI DETECT PANEL ══ */
+.ai-panel{
+  position:fixed;
+  bottom:calc(var(--nav) + var(--sb) + 14px);
+  left:50%;transform:translateX(-50%);
+  width:calc(100% - 32px);max-width:398px;
+  z-index:300;
+  background:var(--bg);border-radius:22px;
+  box-shadow:var(--s-float),0 0 0 1px rgba(91,141,238,.1);
+  padding:20px;
+  display:none;
+  animation:aipin .45s cubic-bezier(.34,1.56,.64,1);
+}
+.ai-panel.on{display:block;}
+@keyframes aipin{from{transform:translateX(-50%) translateY(24px);opacity:0;}to{transform:translateX(-50%) translateY(0);opacity:1;}}
+.ai-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.ai-av{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(145deg,var(--blue),#7aa8ff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  box-shadow:0 0 18px rgba(91,141,238,.38);
+  animation:aipulse 2.5s ease-in-out infinite;
+}
+@keyframes aipulse{0%,100%{box-shadow:0 0 18px rgba(91,141,238,.38);}50%{box-shadow:0 0 30px rgba(91,141,238,.55);}}
+.ai-lbl{font-size:.65rem;font-weight:700;color:var(--blue);font-family:var(--fm);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.ai-q{font-size:.88rem;font-weight:700;color:var(--t1);line-height:1.4;}
+.ai-q strong{color:var(--blue);}
+.ai-delta{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg);border-radius:var(--r-pill);box-shadow:var(--s-in);
+  padding:5px 14px;font-family:var(--fm);font-size:.8rem;font-weight:700;
+  color:var(--rose);margin-bottom:14px;
+}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.sb-btn{
+  background:var(--bg);border-radius:var(--r-sm);box-shadow:var(--s-soft);
+  padding:12px 10px;text-align:center;cursor:pointer;border:none;
+  display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s;
+}
+.sb-btn:active{box-shadow:var(--s-press);}
+.sb-btn.sel{box-shadow:var(--s-press),0 0 0 2px var(--blue);}
+.sb-icon{font-size:1.4rem;}
+.sb-name{font-size:.74rem;font-weight:700;color:var(--t1);}
+.sb-w{font-size:.64rem;font-family:var(--fm);color:var(--t2);}
+.ai-acts{display:flex;gap:8px;}
+
+/* ══ MODAL ══ */
+.modal-bg{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-bg.on{opacity:1;pointer-events:auto;}
+.modal-sh{
+  width:100%;max-width:var(--mw);
+  background:var(--bg);border-radius:26px 26px 0 0;
+  padding:20px 20px calc(28px + var(--sb));
+  box-shadow:0 -18px 60px rgba(0,0,0,.12);
+  transform:translateY(100%);
+  transition:transform .36s cubic-bezier(.34,1.56,.64,1);
+  max-height:88dvh;overflow-y:auto;
+}
+.modal-bg.on .modal-sh{transform:translateY(0);}
+.mh{width:38px;height:4px;border-radius:2px;background:var(--bg);box-shadow:var(--s-in);margin:0 auto 18px;}
+.mt{font-size:1.1rem;font-weight:800;color:var(--t1);margin-bottom:16px;letter-spacing:-.3px;}
+
+/* ══ TOAST ══ */
+.toasts{
+  position:fixed;
+  bottom:calc(var(--nav) + var(--sb) + 12px);
+  left:50%;transform:translateX(-50%);
+  z-index:500;width:calc(100% - 32px);max-width:380px;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;
+}
+.toast{
+  background:var(--bg);border-radius:var(--r-pill);box-shadow:var(--s-float);
+  padding:11px 18px;display:flex;align-items:center;gap:10px;
+  font-size:.83rem;font-weight:600;width:100%;pointer-events:auto;
+  animation:tin .38s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes tin{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.toast-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* ══ ONBOARDING ══ */
+.ob-overlay{
+  position:fixed;inset:0;z-index:600;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 28px;transition:opacity .5s,transform .5s;
+}
+.ob-overlay.out{opacity:0;transform:scale(.96);pointer-events:none;}
+.ob-step{display:none;flex-direction:column;align-items:center;text-align:center;gap:20px;animation:pin .4s ease;}
+.ob-step.on{display:flex;}
+.ob-orb{width:100px;height:100px;border-radius:50%;background:var(--bg);box-shadow:var(--s-float);display:flex;align-items:center;justify-content:center;}
+.ob-orb-in{width:72px;height:72px;border-radius:50%;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:2.2rem;}
+.ob-title{font-size:1.6rem;font-weight:900;letter-spacing:-.5px;line-height:1.2;}
+.ob-sub{font-size:.88rem;color:var(--t2);line-height:1.7;max-width:265px;}
+.ob-dots{display:flex;gap:8px;align-items:center;}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:var(--bg);box-shadow:var(--s-in);transition:all .3s;}
+.ob-dot.on{background:var(--blue);box-shadow:0 0 10px rgba(91,141,238,.4);width:22px;border-radius:4px;}
+
+/* ══ DISCLAIMER ══ */
+.disc{font-size:.69rem;color:var(--t3);line-height:1.55;background:var(--bg);border-radius:var(--r-xs);box-shadow:var(--s-in);padding:11px 13px;margin-bottom:12px;font-family:var(--fm);}
+
+/* ══ STEP ══ */
+.step{background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);padding:16px 14px;margin-bottom:10px;}
+.step-n{width:26px;height:26px;border-radius:50%;background:linear-gradient(145deg,var(--blue),#7aa8ff);color:#fff;font-size:.76rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(91,141,238,.3);margin-bottom:8px;}
+.step-t{font-size:.88rem;font-weight:700;margin-bottom:3px;}
+.step-d{font-size:.77rem;color:var(--t2);line-height:1.55;}
+
+/* ══ PREMIUM ══ */
+.prem{background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);padding:22px;position:relative;overflow:hidden;}
+.prem::before{content:'';position:absolute;top:-28px;right:-28px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(91,141,238,.09),transparent 70%);}
+
+/* ══ TIP CARD ══ */
+.tip{background:var(--bg);border-radius:var(--r);box-shadow:var(--s-out);padding:16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;}
+.tip-ic{width:36px;height:36px;border-radius:11px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.tip-b{flex:1;}
+.tip-t{font-size:.87rem;font-weight:700;margin-bottom:3px;}
+.tip-d{font-size:.75rem;color:var(--t2);line-height:1.5;}
+.tip-sv{font-size:.73rem;font-weight:700;font-family:var(--fm);color:var(--green);margin-top:6px;}
+.tip-ap{font-size:.71rem;font-weight:700;color:var(--blue);margin-top:6px;cursor:pointer;}
+
+/* ══ TOGGLE ROW ══ */
+.trow{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--bg-2);}
+.trow:last-child{border-bottom:none;padding-bottom:0;} .trow:first-child{padding-top:0;}
+.trow-t{font-size:.9rem;font-weight:600;color:var(--t1);}
+.trow-s{font-size:.73rem;color:var(--t2);margin-top:2px;}
+
+/* ══ STAGGER ══ */
+.st>*{animation:pin .4s ease both;}
+.st>*:nth-child(1){animation-delay:.04s}.st>*:nth-child(2){animation-delay:.09s}.st>*:nth-child(3){animation-delay:.14s}.st>*:nth-child(4){animation-delay:.19s}.st>*:nth-child(5){animation-delay:.24s}.st>*:nth-child(6){animation-delay:.29s}
+
+/* ══ EMPTY ══ */
+.empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:28px 16px;text-align:center;}
+.ei{font-size:2rem;opacity:.18;}
+.et{font-size:.82rem;color:var(--t3);line-height:1.55;}
+
+/* ══ PTR ══ */
+.ptr{position:fixed;top:calc(var(--top) - 2px);left:50%;transform:translateX(-50%);background:var(--bg);border-radius:0 0 var(--r-sm) var(--r-sm);box-shadow:var(--s-soft);padding:8px 18px;font-size:.7rem;font-family:var(--fm);color:var(--t3);z-index:150;display:none;align-items:center;gap:8px;}
+.ptr.on{display:flex;}
+.spin{width:12px;height:12px;border:2px solid var(--t3);border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+/* CHART WRAP */
+.cw{position:relative;height:185px;margin-top:6px;}
+
+/* ══════════════════════════════════════
+   PUBLICITÉS — Style neumorphique natif
+   ══════════════════════════════════════ */
+
+/* Conteneur pub générique */
+.ad-wrap {
+  margin: 6px 0 16px;
+  position: relative;
+}
+
+/* Label "Publicité" discret */
+.ad-wrap::before {
+  content: 'Publicité';
+  display: block;
+  font-size: .56rem;
+  font-weight: 600;
+  color: var(--t3);
+  font-family: var(--fm);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* Bannière horizontale — entre sections */
+.ad-banner {
+  background: var(--bg);
+  border-radius: var(--r);
+  box-shadow: var(--s-in);       /* creux = moins intrusif */
+  overflow: hidden;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Format rectangle — dans les listes */
+.ad-rect {
+  background: var(--bg);
+  border-radius: var(--r);
+  box-shadow: var(--s-in);
+  overflow: hidden;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Format interstitiel léger — en bas de page */
+.ad-native {
+  background: var(--bg);
+  border-radius: var(--r);
+  box-shadow: var(--s-out);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  overflow: hidden;
+}
+.ad-native-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: var(--s-in);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.ad-native-body { flex: 1; min-width: 0; }
+.ad-native-title { font-size: .84rem; font-weight: 700; color: var(--t1); margin-bottom: 2px; }
+.ad-native-sub   { font-size: .72rem; color: var(--t2); }
+.ad-native-cta {
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(145deg, var(--blue), #7aa8ff);
+  color: #fff;
+  font-size: .72rem; font-weight: 700;
+  box-shadow: 0 4px 12px rgba(91,141,238,.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* AdSense responsive unit */
+.ad-wrap ins.adsbygoogle {
+  display: block;
+  border-radius: var(--r);
+}
+
+/* Mode sombre — ads légèrement atténuées */
+[data-theme="dark"] .ad-banner,
+[data-theme="dark"] .ad-rect,
+[data-theme="dark"] .ad-native {
+  opacity: .88;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Mobile first, adaptatif
+   ══════════════════════════════════════════ */
+
+/* ── Très petits écrans (< 360px — iPhone SE, etc.) ── */
+@media (max-width:359px) {
+  :root { --top:54px; --nav:66px; }
+
+  .logo-name { font-size:.9rem; }
+  .logo-sub  { display:none; }
+  .logo-orb  { width:32px; height:32px; }
+
+  .scr { padding:10px 12px 22px; }
+
+  .card { padding:16px; }
+  .card-in { padding:12px; }
+
+  .tiles { gap:10px; }
+  .tile { padding:14px 12px; }
+  .tile-val { font-size:1.6rem; }
+
+  .caps-wrap { gap:10px; }
+  .cap-track { max-width:38px; height:88px; }
+
+  .gate { padding:36px 8px 16px; }
+  .gate-title { font-size:1.35rem; }
+  .gate-orb { width:80px; height:80px; }
+  .gate-orb-in { width:56px; height:56px; }
+
+  .donut-wrap { width:130px; height:130px; }
+
+  .watt-ring { width:136px; height:136px; }
+  .watt-v { font-size:1.9rem; }
+
+  .sh { font-size:.58rem; margin:18px 0 10px; }
+  .pills { gap:6px; }
+  .pill { padding:7px 12px; font-size:.68rem; }
+
+  .btn-a, .btn-p, .btn-d { padding:13px 24px; font-size:.88rem; }
+
+  .fc-v { font-size:1rem; }
+  .fc-l { font-size:.54rem; }
+
+  .score-row { flex-direction:column; align-items:center; gap:14px; }
+  .score-facts { width:100%; }
+}
+
+/* ── Petits mobiles (360–390px — iPhone 12 mini, Pixel) ── */
+@media (min-width:360px) and (max-width:389px) {
+  .tiles { gap:10px; }
+  .tile-val { font-size:1.75rem; }
+  .caps-wrap { gap:11px; }
+  .cap-track { max-width:40px; }
+  .donut-wrap { width:140px; height:140px; }
+  .score-row { gap:14px; }
+}
+
+/* ── Mobiles standards (390–430px — iPhone 14, Pixel 7) ── */
+@media (min-width:390px) and (max-width:430px) {
+  /* Layout optimal — rien à changer, c'est la cible principale */
+}
+
+/* ── Desktop / tablette (> 430px) ── */
+@media (min-width:431px) {
+  /* App centrée — fond gris environnant */
+  .topbar, .bnav {
+    /* déjà max-width:var(--mw) */
+  }
+
+  /* Cards légèrement plus larges */
+  .card { padding:22px; }
+  .tiles { gap:14px; }
+
+  /* Caps plus grandes */
+  .cap-track { height:110px; max-width:52px; }
+
+  /* Donut plus grand */
+  .donut-wrap { width:180px; height:180px; }
+
+  /* Watt ring plus grand */
+  .watt-ring { width:180px; height:180px; }
+  .watt-v { font-size:2.6rem; }
+
+  /* Score row côte à côte toujours */
+  .score-row { gap:24px; }
+
+  /* Typography légèrement plus grande */
+  body { font-size:16px; }
+  .tile-val { font-size:2.1rem; }
+
+  /* Forecast avec plus d'espace */
+  .fc-v { font-size:1.4rem; }
+
+  /* Modale plus haute */
+  .modal-sh { max-height:80dvh; }
+}
+
+/* ── Paysage mobile ── */
+@media (max-height:500px) and (orientation:landscape) {
+  :root { --top:50px; --nav:58px; }
+  .gate { padding:24px 12px 12px; }
+  .gate-orb { width:70px; height:70px; }
+  .gate-orb-in { width:50px; height:50px; }
+  .gate-title { font-size:1.2rem; }
+  .gate-sub { font-size:.8rem; }
+  .cw { height:150px; }
+  .nb-l { display:none; }
+  .nb-w { width:38px; height:38px; }
+  .watt-ring { width:130px; height:130px; }
+  .donut-wrap { width:120px; height:120px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ ONBOARDING ══ -->
+<div class="ob-overlay" id="ob">
+  <div class="ob-step on" id="ob0"><div class="ob-orb"><div class="ob-orb-in"><svg width="38" height="38" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="olg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5b8dee"/><stop offset="100%" stop-color="#2ec4b6"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="url(#olg)" opacity=".15"/><path d="M13.5 3.5L7 13h5.5L10.5 20.5L18 11h-5.5L13.5 3.5z" fill="url(#olg)"/></svg></div></div><div class="ob-title">Bienvenue sur<br>EnergyX</div><div class="ob-sub">Suivi énergétique intelligent avec IA de détection d'appareils intégrée.</div></div>
+  <div class="ob-step" id="ob1"><div class="ob-orb"><div class="ob-orb-in">⬡</div></div><div class="ob-title">Linky en<br>30 secondes</div><div class="ob-sub">Entrez votre PDL, autorisez via Enedis — vos vraies données arrivent automatiquement.</div></div>
+  <div class="ob-step" id="ob2"><div class="ob-orb"><div class="ob-orb-in">🤖</div></div><div class="ob-title">IA NILM<br>intégrée</div><div class="ob-sub">L'IA détecte chaque appareil branché et apprend de vos confirmations.</div></div>
+  <div class="ob-step" id="ob3"><div class="ob-orb"><div class="ob-orb-in">🏆</div></div><div class="ob-title">Économisez<br>dès aujourd'hui</div><div class="ob-sub">Comparateur live, alertes intelligentes, conseils personnalisés.</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;position:absolute;bottom:60px;left:0;padding:0 28px;">
+    <div class="ob-dots"><div class="ob-dot on" id="od0"></div><div class="ob-dot" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div></div>
+    <button class="btn btn-a" id="ob-next" onclick="obNext()">Continuer →</button>
+    <button style="font-size:.78rem;color:var(--t3);font-weight:600;" onclick="obDone()">Passer</button>
+  </div>
+</div>
+
+<!-- ══ PTR ══ -->
+<div class="ptr" id="ptr"><div class="spin"></div>Actualisation…</div>
+
+<!-- ══ TOPBAR ══ -->
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-orb">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="tlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5b8dee"/><stop offset="100%" stop-color="#2ec4b6"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="url(#tlg)" opacity=".14"/><path d="M13.5 3.5L7 13h5.5L10.5 20.5L18 11h-5.5L13.5 3.5z" fill="url(#tlg)"/></svg>
+    </div>
+    <div><div class="logo-name">EnergyX</div><div class="logo-sub">Smart Energy</div></div>
+  </div>
+  <div class="t-r">
+    <div class="chip" id="chip"><div class="chip-dot"></div><span id="chip-txt">Non connecté</span></div>
+    <button class="ib" onclick="toggleTheme()"><svg id="tsv" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    <button class="ib" onclick="openM('m-acc')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+  </div>
+</header>
+
+<main>
+
+<!-- ████ ACCUEIL ████ -->
+<div class="scr on" id="s-home">
+  <div id="home-off">
+    <div class="gate st">
+      <div class="gate-orb"><div class="gate-orb-in"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="glg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5b8dee"/><stop offset="100%" stop-color="#2ec4b6"/></linearGradient></defs><path d="M13.5 3.5L7 13h5.5L10.5 20.5L18 11h-5.5L13.5 3.5z" fill="url(#glg)"/></svg></div></div>
+      <div class="gate-title">Votre énergie,<br>sous contrôle.</div>
+      <div class="gate-sub">Connectez votre Linky pour des données réelles. Zéro valeur inventée.</div>
+      <button class="btn btn-a" onclick="go('linky')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Connecter mon Linky</button>
+      <button class="btn-d" onclick="startDemo()">Explorer en mode démo →</button>
+      <p style="font-size:.7rem;color:var(--t3);max-width:230px;line-height:1.6;text-align:center;">Mode démo : données simulées réalistes. Aucune vraie donnée affichée.</p>
+    </div>
+  </div>
+
+  <div id="home-on" style="display:none;">
+    <!-- HC Widget -->
+    <div class="card" id="hc-c">
+      <div class="hc-row">
+        <div class="hc-orb" id="hc-orb">🌙</div>
+        <div class="hc-body">
+          <div class="hc-title" id="hc-title">Heures creuses</div>
+          <div class="hc-sub" id="hc-sub">Tarif réduit · 22h30 → 6h30</div>
+          <div class="hc-cd" id="hc-cd">—</div>
+        </div>
+      </div>
+      <div class="hc-bar-bg"><div class="hc-bar-fg" id="hc-fg" style="width:0%;"></div></div>
+    </div>
+
+    <!-- Période -->
+    <div class="pills" id="home-pills">
+      <button class="pill on" onclick="setPeriod(this,'today')">Aujourd'hui</button>
+      <button class="pill" onclick="setPeriod(this,'week')">7 jours</button>
+      <button class="pill" onclick="setPeriod(this,'month')">Ce mois</button>
+      <button class="pill" onclick="setPeriod(this,'year')">1 an</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="tiles st">
+      <div class="tile"><div class="tile-lbl">Consommation</div><div class="tile-val" id="kpi-k" style="color:var(--blue);">—</div><div class="tile-unit">kWh</div><div class="tile-trend" id="kpi-kt" style="color:var(--t3);">—</div></div>
+      <div class="tile"><div class="tile-lbl">Coût estimé</div><div class="tile-val" id="kpi-c" style="color:var(--amber);">—</div><div class="tile-unit">€</div><div class="tile-trend" id="kpi-ct" style="color:var(--t3);">—</div></div>
+    </div>
+
+    <!-- Graphique courbe -->
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;"><div style="font-size:.75rem;font-weight:700;color:var(--t2);" id="chart-lbl">Courbe du jour</div><span style="font-size:.6rem;font-family:var(--fm);color:var(--t3);">kWh</span></div><div class="cw"><canvas id="c-main"></canvas></div></div>
+
+    <!-- ─── GRAPHIQUES CAPSULES ─── -->
+    <div class="sh"><span>Répartition énergétique</span></div>
+    <div class="card">
+      <!-- DONUT central -->
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px;">
+        <div style="flex-shrink:0;">
+          <div class="donut-wrap">
+            <svg width="160" height="160" viewBox="0 0 160 160">
+              <defs>
+                <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5b8dee"/><stop offset="100%" stop-color="#7aa8ff"/></linearGradient>
+                <filter id="df"><feGaussianBlur stdDeviation="3" result="blur"/><feComposite in="SourceGraphic" in2="blur" operator="over"/></filter>
+              </defs>
+              <!-- Track creux -->
+              <circle cx="80" cy="80" r="64" fill="none" stroke="var(--bg-2)" stroke-width="14"/>
+              <!-- Arc principal -->
+              <circle cx="80" cy="80" r="64" fill="none" stroke="url(#dg1)" stroke-width="14" stroke-dasharray="402" id="donut-arc" stroke-dashoffset="402" stroke-linecap="round" style="transition:stroke-dashoffset 1.4s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 0 8px rgba(91,141,238,.4));"/>
+            </svg>
+            <div class="donut-center">
+              <div class="donut-val" id="donut-v">—</div>
+              <div class="donut-lbl">Score Éco</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:9px;" id="score-facts"></div>
+      </div>
+
+      <!-- BARRES CAPSULES colorées -->
+      <div class="caps-wrap" id="caps-home">
+        <div class="cap-col">
+          <div class="cap-val" id="cv-hp">—</div>
+          <div class="cap-track"><div class="cap-fill" id="cf-hp" style="height:0%;background:linear-gradient(180deg,#5b8dee,rgba(91,141,238,.4));"></div></div>
+          <div class="cap-lbl">HP</div>
+        </div>
+        <div class="cap-col">
+          <div class="cap-val" id="cv-hc">—</div>
+          <div class="cap-track"><div class="cap-fill" id="cf-hc" style="height:0%;background:linear-gradient(180deg,#2ec4b6,rgba(46,196,182,.4));"></div></div>
+          <div class="cap-lbl">HC</div>
+        </div>
+        <div class="cap-col">
+          <div class="cap-val" id="cv-pk">—</div>
+          <div class="cap-track"><div class="cap-fill" id="cf-pk" style="height:0%;background:linear-gradient(180deg,#ffa040,rgba(255,160,64,.4));"></div></div>
+          <div class="cap-lbl">PIC</div>
+        </div>
+        <div class="cap-col">
+          <div class="cap-val" id="cv-co">—</div>
+          <div class="cap-track"><div class="cap-fill" id="cf-co" style="height:0%;background:linear-gradient(180deg,#4cd97b,rgba(76,217,123,.4));"></div></div>
+          <div class="cap-lbl">CO₂</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prévision -->
+    <div class="sh">Prévision fin de mois</div>
+    <div class="card" id="fc-c" style="display:none;">
+      <div class="fc-row">
+        <div class="fc-cell"><div class="fc-l">kWh estimé</div><div class="fc-v" id="fc-k" style="color:var(--blue);">—</div></div>
+        <div class="fc-div"></div>
+        <div class="fc-cell"><div class="fc-l">Coût TTC</div><div class="fc-v" id="fc-e" style="color:var(--amber);">—</div></div>
+        <div class="fc-div"></div>
+        <div class="fc-cell"><div class="fc-l">vs mois–1</div><div class="fc-v" id="fc-d">—</div></div>
+      </div>
+    </div>
+
+    <!-- Conseils IA rapides -->
+    <div class="sh"><span>Conseils IA</span><span class="sh-a" onclick="go('more')">Tous →</span></div>
+    <div id="home-tips"></div>
+
+    <!-- ── PUB 1 : Bannière horizontale entre conseils et alertes ── -->
+    <div class="ad-wrap">
+      <div class="ad-banner">
+        <!-- AdSense : bannière adaptative -->
+        <ins class="adsbygoogle"
+          style="display:block;width:100%;min-height:70px;"
+          data-ad-client="ca-pub-XXXXXXXXXX"
+          data-ad-slot="1111111111"
+          data-ad-format="horizontal"
+          data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+
+    <!-- Alertes rapides -->
+    <div class="sh"><span>Alertes actives</span><span class="sh-a" onclick="go('more');setTab('alerts')">Voir tout →</span></div>
+    <div id="home-alerts"></div>
+  </div>
+</div>
+
+<!-- ████ HISTORIQUE ████ -->
+<div class="scr" id="s-hist">
+  <div id="hist-off"><div class="gate st"><div class="gate-orb"><div class="gate-orb-in" style="font-size:1.4rem;">📅</div></div><div class="gate-title">Historique</div><div class="gate-sub">Connectez votre Linky ou explorez en mode démo.</div><button class="btn btn-a" onclick="go('linky')">Connecter mon Linky</button><button class="btn-d" onclick="startDemo();go('hist')">Mode démo →</button></div></div>
+  <div id="hist-on" style="display:none;">
+    <div class="pills"><button class="pill on" onclick="setHistP(this,'day')">Jour</button><button class="pill" onclick="setHistP(this,'week')">Semaine</button><button class="pill" onclick="setHistP(this,'month')">Mois</button><button class="pill" onclick="setHistP(this,'year')">Année</button></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><div style="font-size:.75rem;font-weight:700;color:var(--t2);" id="hist-lbl">Courbe horaire</div><div style="display:flex;gap:10px;font-size:.65rem;font-family:var(--fm);color:var(--t3);"><span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:2px;background:var(--blue);border-radius:1px;"></span>Auj.</span><span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:2px;background:var(--t3);border-radius:1px;"></span>Hier</span></div></div><div class="cw"><canvas id="c-hist"></canvas></div></div>
+    <div class="tiles st">
+      <div class="tile"><div class="tile-lbl">HP</div><div class="tile-val" id="h-hp" style="font-size:1.5rem;color:var(--blue);">—</div><div class="tile-unit">kWh</div></div>
+      <div class="tile"><div class="tile-lbl">HC</div><div class="tile-val" id="h-hc" style="font-size:1.5rem;color:var(--teal);">—</div><div class="tile-unit">kWh</div></div>
+      <div class="tile"><div class="tile-lbl">Coût HP</div><div class="tile-val" id="h-chp" style="font-size:1.5rem;color:var(--amber);">—</div><div class="tile-unit">€</div></div>
+      <div class="tile"><div class="tile-lbl">Coût HC</div><div class="tile-val" id="h-chc" style="font-size:1.5rem;color:var(--green);">—</div><div class="tile-unit">€</div></div>
+    </div>
+    <!-- Capsules historique -->
+    <div class="sh">Répartition · Cette période</div>
+    <div class="card">
+      <div class="caps-wrap">
+        <div class="cap-col"><div class="cap-val" id="hcv1">—</div><div class="cap-track" style="height:110px;"><div class="cap-fill" id="hcf1" style="height:0%;background:linear-gradient(180deg,#5b8dee,rgba(91,141,238,.35));"></div></div><div class="cap-lbl">HP</div></div>
+        <div class="cap-col"><div class="cap-val" id="hcv2">—</div><div class="cap-track" style="height:110px;"><div class="cap-fill" id="hcf2" style="height:0%;background:linear-gradient(180deg,#2ec4b6,rgba(46,196,182,.35));"></div></div><div class="cap-lbl">HC</div></div>
+        <div class="cap-col"><div class="cap-val" id="hcv3">—</div><div class="cap-track" style="height:110px;"><div class="cap-fill" id="hcf3" style="height:0%;background:linear-gradient(180deg,#a78bfa,rgba(167,139,250,.35));"></div></div><div class="cap-lbl">Nuit</div></div>
+        <div class="cap-col"><div class="cap-val" id="hcv4">—</div><div class="cap-track" style="height:110px;"><div class="cap-fill" id="hcf4" style="height:0%;background:linear-gradient(180deg,#ffd166,rgba(255,209,102,.35));"></div></div><div class="cap-lbl">Jour</div></div>
+      </div>
+    </div>
+    <div class="sh">7 derniers jours</div><div class="card" id="journal"></div>
+
+    <!-- ── PUB 2 : Rectangle dans l'historique ── -->
+    <div class="ad-wrap">
+      <div class="ad-rect">
+        <ins class="adsbygoogle"
+          style="display:block;width:100%;min-height:120px;"
+          data-ad-client="ca-pub-XXXXXXXXXX"
+          data-ad-slot="2222222222"
+          data-ad-format="rectangle"
+          data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+
+    <div class="sh">12 mois</div><div class="card"><div class="cw" style="height:155px;"><canvas id="c-12m"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ████ IA APPAREILS ████ -->
+<div class="scr" id="s-nilm">
+  <!-- Learning bar -->
+  <div class="lbar" style="margin-top:4px;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+    <div class="lbar-track"><div class="lbar-fill" id="lbar-f" style="width:0%;"></div></div>
+    <div class="lbar-lbl" id="lbar-l">IA · 0% entraînée</div>
+  </div>
+  <!-- Wattmètre -->
+  <div class="card" style="padding-top:18px;">
+    <div class="watt-ring">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <defs><linearGradient id="wrg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5b8dee"/><stop offset="100%" stop-color="#2ec4b6"/></linearGradient></defs>
+        <circle cx="80" cy="80" r="68" fill="none" stroke="var(--bg-2)" stroke-width="10"/>
+        <circle cx="80" cy="80" r="68" fill="none" stroke="url(#wrg)" stroke-width="10" stroke-dasharray="427" id="w-arc" stroke-dashoffset="427" stroke-linecap="round" style="transition:stroke-dashoffset .5s ease,stroke .5s;"/>
+      </svg>
+      <div class="watt-center">
+        <div class="watt-v" id="w-val">—</div>
+        <div class="watt-u">Watts</div>
+        <div class="watt-l" id="w-lbl">En attente…</div>
+      </div>
+    </div>
+    <div class="live-mini"><canvas id="c-live"></canvas></div>
+  </div>
+  <!-- Appareils -->
+  <div class="sh"><span>Appareils détectés</span><button class="btn btn-xs btn-g" onclick="openM('m-add')">+ Ajouter</button></div>
+  <div id="dev-stack" class="st"></div>
+  <!-- Actions -->
+  <div style="display:flex;gap:10px;margin-top:6px;">
+    <button class="btn btn-a btn-sm" style="flex:2;background:linear-gradient(145deg,var(--teal),#4dd9cc);box-shadow:0 6px 18px rgba(46,196,182,.3);" onclick="simNILM()">⚡ Simuler un branchement</button>
+    <button class="btn btn-g btn-sm" style="flex:1;" onclick="openM('m-nilm')">Comment ?</button>
+  </div>
+  <!-- Log détection -->
+  <div class="sh" style="margin-top:20px;"><span>Journal IA</span></div>
+  <div class="card" id="log-home"><div class="empty"><div class="ei">🤖</div><div class="et">Simulez un branchement pour tester la détection IA</div></div></div>
+  <!-- Signatures -->
+  <div class="sh">Signatures d'appareils</div>
+  <div id="sig-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"></div>
+</div>
+
+<!-- ████ PLUS (Alertes + Conseils + Offres) ████ -->
+<div class="scr" id="s-more">
+  <!-- Tabs inline -->
+  <div class="pills" id="more-tabs" style="margin-top:4px;">
+    <button class="pill on" onclick="setMoreTab(this,'alerts')">Alertes</button>
+    <button class="pill" onclick="setMoreTab(this,'tips')">Conseils IA</button>
+    <button class="pill" onclick="setMoreTab(this,'compare')">Offres</button>
+  </div>
+
+  <!-- ─── Alertes ─── -->
+  <div id="t-alerts">
+    <div class="sh"><span>Notifications</span><button class="btn btn-xs btn-g" onclick="openM('m-alert')">+ Nouvelle</button></div>
+    <div id="al-live" class="st"></div>
+    <div class="sh">Règles</div>
+    <div id="al-rules" class="st"></div>
+    <div class="sh">Créer une alerte</div>
+    <div class="card">
+      <div class="fg"><label class="fl" for="al-type">Type</label><select class="fi" id="al-type"><option value="power">Puissance (W)</option><option value="budget_month">Budget mensuel (€)</option><option value="anomaly">Anomalie IA</option><option value="offpeak">Heures creuses</option><option value="offer">Meilleure offre</option></select></div>
+      <div class="fg"><label class="fl" for="al-val">Seuil</label><input class="fi" id="al-val" type="number" placeholder="Ex : 2000"></div>
+      <div class="fg" style="margin-bottom:16px;"><label class="fl">Canaux</label>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:.88rem;">📱 Push</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:.88rem;">📧 Email</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:.88rem;">💬 SMS</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+      </div>
+      <button class="btn btn-a" onclick="addAlertRule()">Créer l'alerte</button>
+    </div>
+  </div>
+
+  <!-- ─── Conseils IA ─── -->
+  <div id="t-tips" style="display:none;">
+    <div id="tips-off-m" style="display:none;"><div class="gate st"><div class="gate-orb"><div class="gate-orb-in">💡</div></div><div class="gate-title">Conseils IA</div><div class="gate-sub">Connectez votre Linky ou lancez le mode démo.</div><button class="btn btn-a" onclick="go('linky')">Connecter mon Linky</button><button class="btn-d" onclick="startDemo();go('more');setMoreTab(document.getElementById('more-tabs').children[1],'tips')">Mode démo →</button></div></div>
+    <div id="tips-on-m" style="display:none;"><div id="tips-list" class="st"></div></div>
+  </div>
+
+  <!-- ─── Offres ─── -->
+  <div id="t-compare" style="display:none;">
+    <div class="disc">Prix collectés sur les sites officiels des fournisseurs et l'API CRE. Indicatifs — vérifiez avant souscription.</div>
+    <div class="card" style="padding:16px 18px;">
+      <div style="font-size:.77rem;font-weight:700;color:var(--t2);margin-bottom:10px;">Votre consommation mensuelle</div>
+      <div style="display:flex;align-items:center;gap:10px;"><input class="fi" id="kwh-in" type="number" placeholder="Ex : 300" style="flex:1;" oninput="renderComp()"><span style="font-size:.78rem;font-weight:700;color:var(--t3);font-family:var(--fm);">kWh</span></div>
+      <div id="kwh-hint" style="display:none;font-size:.69rem;color:var(--blue);font-weight:700;margin-top:8px;font-family:var(--fm);">⬡ Valeur issue de votre Linky</div>
+    </div>
+    <div id="comp-list"><div class="empty"><div class="ei">⇌</div><div class="et">Entrez votre consommation pour comparer</div></div></div>
+
+    <!-- ── PUB 3 : Format natif dans le comparateur ── -->
+    <div class="ad-wrap">
+      <ins class="adsbygoogle"
+        style="display:block;width:100%;min-height:70px;"
+        data-ad-client="ca-pub-XXXXXXXXXX"
+        data-ad-slot="3333333333"
+        data-ad-format="fluid"
+        data-ad-layout="in-article"
+        data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div class="sh">Évolution tarifs HP</div>
+    <div class="card"><div class="cw" style="height:160px;"><canvas id="c-prices"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ████ LINKY ████ -->
+<div class="scr" id="s-linky">
+  <div id="lk-on" style="display:none;">
+    <div class="sh" style="margin-top:4px;">Mon compteur</div>
+    <div class="card st">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><div style="width:40px;height:40px;border-radius:12px;background:var(--bg);box-shadow:var(--s-in);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">⬡</div><div style="flex:1;"><div style="font-size:.88rem;font-weight:700;">Linky connecté</div><div style="font-size:.67rem;font-family:var(--fm);color:var(--t3);margin-top:1px;" id="pdl-d">—</div></div><div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s ease-in-out infinite;"></div></div>
+      <div class="lr"><div class="lr-ic">📡</div><div class="lr-b"><div class="lr-t">Courbe de charge 30min</div><div class="lr-s">Mise à jour toutes les 30 min</div></div><div style="font-size:.69rem;font-weight:700;color:var(--green);font-family:var(--fm);">Actif</div></div>
+      <div class="lr"><div class="lr-ic">📊</div><div class="lr-b"><div class="lr-t">Index HP/HC quotidiens</div><div class="lr-s">Historique 36 mois</div></div><div style="font-size:.69rem;font-weight:700;color:var(--green);font-family:var(--fm);">Actif</div></div>
+      <div class="lr" style="border:none;padding-bottom:0;"><div class="lr-ic">🤖</div><div class="lr-b"><div class="lr-t">IA NILM activée</div><div class="lr-s">Détection automatique des appareils</div></div><div style="font-size:.69rem;font-weight:700;color:var(--blue);font-family:var(--fm);">Actif</div></div>
+    </div>
+    <button class="btn-danger btn btn-full" onclick="disconnect()">Déconnecter le compteur</button>
+  </div>
+  <div id="lk-off">
+    <div class="sh" style="margin-top:4px;">Pourquoi ça n'a pas marché ?</div>
+    <div class="card-in" style="margin-bottom:12px;"><div style="font-size:.83rem;font-weight:700;color:var(--rose);margin-bottom:7px;">⚠️ Un backend est requis</div><div style="font-size:.77rem;color:var(--t2);line-height:1.7;">Enedis envoie le code OAuth à une URL callback publique. Un fichier local n'en a pas — le code n'arrive jamais.</div></div>
+    <div class="sh">Ce qu'il faut</div>
+    <div class="st"><div class="step"><div class="step-n">1</div><div class="step-t">S'inscrire sur datahub.enedis.fr</div><div class="step-d">Créer une application → obtenir client_id + client_secret.</div></div><div class="step"><div class="step-n">2</div><div class="step-t">Backend Node.js ou Python</div><div class="step-d">Reçoit le callback, échange le code contre un token, appelle l'API.</div></div><div class="step"><div class="step-n">3</div><div class="step-t">Héberger en ligne (Vercel)</div><div class="step-d">URL HTTPS publique nécessaire. Gratuit.</div></div></div>
+    <div class="sh">Entrez votre PDL</div>
+    <div class="card"><div class="fg"><label class="fl" for="pdl-in">Numéro PDL (14 chiffres)</label><input class="fi" id="pdl-in" type="text" maxlength="14" placeholder="12345678901234" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'');valPdl()"></div><div class="disc">PDL visible sur votre facture EDF / Enedis.</div><button class="btn btn-a" id="pdl-btn" disabled style="opacity:.45;" onclick="toast('Backend requis pour le vrai flux Enedis','amber')">Autoriser via Enedis →</button></div>
+    <button class="btn-d" onclick="startDemo();go('home')">🟠 Explorer en mode démo →</button>
+  </div>
+  <div class="sh">Saisie manuelle</div>
+  <div class="card"><p style="font-size:.8rem;color:var(--t2);margin-bottom:14px;line-height:1.6;">Sans API, entrez vos relevés depuis votre facture.</p><div class="fg"><label class="fl" for="i-hp">Index HP (Wh)</label><input class="fi" id="i-hp" type="number" placeholder="12345678" inputmode="numeric"></div><div class="fg"><label class="fl" for="i-hc">Index HC (Wh)</label><input class="fi" id="i-hc" type="number" placeholder="9876543" inputmode="numeric"></div><div class="fg" style="margin-bottom:0;"><label class="fl" for="i-dt">Date</label><input class="fi" id="i-dt" type="date"></div></div>
+  <button class="btn btn-a" onclick="saveManual()" style="margin-bottom:12px;">Enregistrer le relevé</button>
+</div>
+
+<!-- ████ RÉGLAGES ████ -->
+<div class="scr" id="s-set">
+  <div class="sh" style="margin-top:4px;">Profil</div>
+  <div class="card">
+    <div class="fg"><label class="fl">Nom</label><input class="fi" id="s-name" placeholder="Jean Dupont"></div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" id="s-email" type="email" placeholder="jean@email.com"></div>
+    <div class="fg"><label class="fl">Logement</label><select class="fi"><option>Studio</option><option>T2</option><option selected>T3</option><option>Maison</option></select></div>
+    <div class="fg"><label class="fl">Contrat</label><select class="fi"><option>Base</option><option selected>HP/HC</option><option>Tempo</option></select></div>
+    <div class="fg" style="margin-bottom:0;"><label class="fl">Budget mensuel (€)</label><input class="fi" id="s-budget" type="number" placeholder="80"></div>
+  </div>
+  <button class="btn btn-a" style="margin-bottom:14px;" onclick="saveSet()">Sauvegarder</button>
+  <div class="sh">Apparence</div>
+  <div class="card"><div class="trow" style="padding:0;border:none;"><div><div class="trow-t">Mode sombre</div><div class="trow-s">Fond noir sur noir</div></div><div class="tog" id="t-tgl" onclick="toggleTheme()"></div></div></div>
+  <div class="sh">IA NILM</div>
+  <div class="card"><div class="trow"><div><div class="trow-t">Détection automatique</div><div class="trow-s">Surveille les variations en temps réel</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div><div class="trow"><div><div class="trow-t">Apprentissage continu</div><div class="trow-s">Améliorer le modèle avec mes confirmations</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div><div class="trow" style="border:none;padding-bottom:0;"><div><div class="trow-t">Notifications IA</div><div class="trow-s">M'avertir lors d'une détection</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div></div>
+  <div class="sh">Notifications</div>
+  <div class="card"><div class="trow"><div><div class="trow-t">Pic de puissance</div><div class="trow-s">Si &gt; 2 000 W</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div><div class="trow"><div><div class="trow-t">Budget mensuel</div><div class="trow-s">Alerte à 80 %</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div><div class="trow" style="border:none;padding-bottom:0;"><div><div class="trow-t">Heures creuses</div><div class="trow-s">Rappel 15 min avant</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div></div>
+  <div class="sh">Premium</div>
+
+  <!-- ── PUB 4 : Juste avant le premium pour motiver l'upgrade ── -->
+  <div class="ad-wrap" style="margin-bottom:0;">
+    <ins class="adsbygoogle"
+      style="display:block;width:100%;min-height:70px;"
+      data-ad-client="ca-pub-XXXXXXXXXX"
+      data-ad-slot="4444444444"
+      data-ad-format="horizontal"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="prem"><div style="font-weight:800;font-size:.98rem;margin-bottom:5px;">EnergyX Premium — Sans publicité</div><div style="font-size:.77rem;color:var(--t2);line-height:1.65;margin-bottom:14px;">Supprimez les pubs · IA avancée · Rapports PDF · Alertes SMS · API accès</div><div style="font-size:1.5rem;font-weight:900;font-family:var(--fm);color:var(--blue);margin-bottom:14px;">4,99 €<span style="font-size:.8rem;font-weight:400;font-family:var(--ff);color:var(--t2);">/mois</span></div><button class="btn btn-a btn-sm" onclick="activatePremium()">Essayer 14 jours gratuit — sans pub</button></div>
+  <div class="sh">À propos</div>
+  <div class="card-in" style="font-size:.75rem;color:var(--t2);line-height:1.7;"><strong style="color:var(--t1);">EnergyX v4.0</strong> — Smart Energy + NILM IA<br>Données Linky via API officielle Enedis<br><span style="color:var(--t3);">Données chiffrées · Made with ⚡</span></div>
+  <div style="height:10px;"></div>
+</div>
+
+</main>
+
+<!-- ══ BOTTOM NAV — 5 onglets ══ -->
+<nav class="bnav">
+  <button class="nb on" onclick="go('home')" data-s="home">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg></div>
+    <span class="nb-l">Accueil</span>
+  </button>
+  <button class="nb" onclick="go('hist')" data-s="hist">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <span class="nb-l">Historique</span>
+  </button>
+  <button class="nb" onclick="go('nilm')" data-s="nilm">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+    <span class="nb-l">IA Détect.</span>
+  </button>
+  <button class="nb" onclick="go('more')" data-s="more" style="position:relative;">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <span class="nb-l">Plus</span>
+    <div class="nb-badge" id="nb-badge"></div>
+  </button>
+  <button class="nb" onclick="go('linky')" data-s="linky">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+    <span class="nb-l">Linky</span>
+  </button>
+  <button class="nb" onclick="go('set')" data-s="set">
+    <div class="nb-w"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+    <span class="nb-l">Réglages</span>
+  </button>
+</nav>
+
+<!-- MODALS -->
+<div class="modal-bg" id="m-acc" onclick="if(event.target===this)closeM('m-acc')"><div class="modal-sh"><div class="mh"></div><div class="mt">Mon compte</div><div class="fg"><label class="fl">Email</label><input class="fi" type="email" placeholder="jean@email.com"></div><div class="fg"><label class="fl">Mot de passe</label><input class="fi" type="password" placeholder="••••••••"></div><button class="btn btn-a" style="margin-bottom:10px;" onclick="closeM('m-acc');toast('✓ Connecté !','green')">Se connecter</button><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><button class="btn btn-g btn-sm" style="justify-content:center;">Google</button><button class="btn btn-g btn-sm" style="justify-content:center;">Apple</button></div><div style="text-align:center;font-size:.8rem;color:var(--t2);">Pas de compte ? <button style="color:var(--blue);font-weight:700;" onclick="toast('Inscription bientôt','blue')">Créer un compte</button></div></div></div>
+
+<div class="modal-bg" id="m-alert" onclick="if(event.target===this)closeM('m-alert')"><div class="modal-sh"><div class="mh"></div><div class="mt">Nouvelle alerte</div><div class="fg"><label class="fl">Type</label><select class="fi" id="m-at"><option value="power">Puissance</option><option value="budget_month">Budget mensuel</option><option value="offpeak">Heures creuses</option><option value="offer">Meilleure offre</option></select></div><div class="fg"><label class="fl">Seuil</label><input class="fi" id="m-av" type="number" placeholder="Ex : 2000"></div><button class="btn btn-a" onclick="addAlertM()">Créer l'alerte</button></div></div>
+
+<div class="modal-bg" id="m-add" onclick="if(event.target===this)closeM('m-add')"><div class="modal-sh"><div class="mh"></div><div class="mt">Ajouter un appareil</div><div class="fg"><label class="fl">Choisir</label><div id="add-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div></div><div class="fg"><label class="fl">Nom personnalisé</label><input class="fi" id="c-name" placeholder="Ex : Radiateur chambre"></div><div class="fg"><label class="fl">Puissance (W)</label><input class="fi" id="c-watts" type="number" placeholder="Ex : 1500" inputmode="numeric"></div><button class="btn btn-a" onclick="addDev()">Ajouter l'appareil</button></div></div>
+
+<div class="modal-bg" id="m-nilm" onclick="if(event.target===this)closeM('m-nilm')"><div class="modal-sh"><div class="mh"></div><div class="mt">Comment fonctionne l'IA ?</div><div class="card-in" style="margin-bottom:14px;"><div style="font-size:.8rem;font-weight:700;color:var(--blue);margin-bottom:7px;">NILM — Non-Intrusive Load Monitoring</div><div style="font-size:.78rem;color:var(--t2);line-height:1.7;">Chaque appareil a une <strong style="color:var(--t1);">signature de consommation unique</strong>. L'IA la compare et apprend de vos confirmations.</div></div><div style="display:flex;flex-direction:column;gap:12px;margin-bottom:4px;"><div style="display:flex;gap:12px;"><div class="step-n">1</div><div><div class="step-t">Surveillance continue</div><div class="step-d">La puissance totale est lue toutes les secondes depuis le Linky.</div></div></div><div style="display:flex;gap:12px;"><div class="step-n">2</div><div><div class="step-t">Détection des variations</div><div class="step-d">Chaque changement brusque de +/- X watts déclenche une analyse.</div></div></div><div style="display:flex;gap:12px;"><div class="step-n">3</div><div><div class="step-t">Matching + apprentissage</div><div class="step-d">Chaque confirmation améliore le modèle. Après ~20, l'IA reconnaît tout seule.</div></div></div></div></div></div>
+
+<!-- AI DETECT PANEL -->
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-head"><div class="ai-av">🤖</div><div><div class="ai-lbl">Watt IA · Détection</div><div class="ai-q" id="ai-q">—</div></div></div>
+  <div class="ai-delta"><span>↑</span><span id="ai-dv">+0 W</span><span style="font-size:.7rem;font-weight:500;color:var(--t2);margin-left:4px;">détectés</span></div>
+  <div class="sg" id="ai-sg"></div>
+  <div class="ai-acts"><button class="btn btn-a btn-sm" style="flex:2;" onclick="confirmDet()">Confirmer ✓</button><button class="btn btn-g btn-sm" style="flex:1;" onclick="skipDet()">Ignorer</button><button class="btn btn-g btn-sm" style="flex:1;" onclick="openM('m-add');skipDet()">Autre…</button></div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   ENERGYX v4 — Unified JS
+   ══════════════════════════════════════════ */
+
+/* ── CATALOG ── */
+const CAT=[
+  {id:'chauffe-eau',  n:'Chauffe-eau',    ic:'🚿',w:2400,rng:[2200,2800],col:'#5b8dee',pat:'flat'},
+  {id:'four',         n:'Four',           ic:'🔥',w:2200,rng:[1800,2500],col:'#ff6b88',pat:'rise'},
+  {id:'lave-linge',   n:'Lave-linge',     ic:'🫧',w:1800,rng:[1500,2200],col:'#a78bfa',pat:'cycles'},
+  {id:'lave-vais',    n:'Lave-vaisselle', ic:'🍽️',w:1500,rng:[1200,1800],col:'#2ec4b6',pat:'cycles'},
+  {id:'radiateur',    n:'Radiateur',      ic:'♨️',w:1200,rng:[1000,2000],col:'#ffa040',pat:'flat'},
+  {id:'micro-ondes',  n:'Micro-ondes',    ic:'📡',w:850,rng:[700,1000],col:'#4cd97b',pat:'short'},
+  {id:'aspirateur',   n:'Aspirateur',     ic:'🌀',w:750,rng:[600,900],col:'#ff6b88',pat:'short'},
+  {id:'seche-chev',   n:'Sèche-cheveux',  ic:'💨',w:1600,rng:[1400,1800],col:'#ffa040',pat:'short'},
+  {id:'frigo',        n:'Réfrigérateur',  ic:'🧊',w:120,rng:[80,180],col:'#2ec4b6',pat:'cycles'},
+  {id:'tele',         n:'Télévision',     ic:'📺',w:110,rng:[80,150],col:'#a78bfa',pat:'flat'},
+  {id:'pc',           n:'PC Bureau',      ic:'🖥️',w:280,rng:[200,350],col:'#5b8dee',pat:'flat'},
+  {id:'clim',         n:'Climatiseur',    ic:'❄️',w:1400,rng:[1200,1800],col:'#2ec4b6',pat:'cycles'},
+];
+
+const TIPS=[
+  {ic:'🌙',t:'Décalez en heures creuses',d:'Lave-linge et lave-vaisselle après 22h30 = −14€/mois.',sv:'14€/mois',df:'Facile'},
+  {ic:'🌡️',t:'Baisser le chauffage de 1°C',d:'Chaque degré en moins = 7% d\'économie.',sv:'18€/mois',df:'Facile'},
+  {ic:'🔌',t:'Éliminer les veilles',d:'~80€/an de veilles. Multiprise programmable = 0€.',sv:'8€/mois',df:'Facile'},
+  {ic:'💡',t:'Passer aux LED A++',d:'LED = 8× moins que les halogènes.',sv:'6€/mois',df:'Facile'},
+  {ic:'☀️',t:'Autoconsommation solaire',d:'3kWc, aides 2025 dispo. ROI < 7 ans.',sv:'45€/mois',df:'Investissement'},
+  {ic:'🏆',t:'Changer de fournisseur',d:'Octopus : 0.178€/kWh vs 0.2516€ actuel.',sv:'42€/mois',df:'Recommandé'},
+];
+
+const COMP=[
+  {n:'EDF',o:'Tarif Réglementé Base',hp:.2516,hc:null,abo:13.58,eco:false},
+  {n:'EDF',o:'Option HP/HC',hp:.2067,hc:.1470,abo:14.96,eco:false},
+  {n:'Engie',o:'Verte Fixe 24m',hp:.1842,hc:.1320,abo:12.50,eco:true},
+  {n:'TotalEnergies',o:'Essentielle',hp:.2015,hc:.1510,abo:13.00,eco:false},
+  {n:'Octopus',o:'Flexible',hp:.1780,hc:.1280,abo:9.90,eco:true},
+  {n:'Ekwateur',o:'100% Renouvelable',hp:.1990,hc:.1495,abo:12.00,eco:true},
+  {n:'Vattenfall',o:'Direct Éco',hp:.1960,hc:.1480,abo:11.50,eco:true},
+];
+
+const S={
+  mode:null,pdl:null,theme:'light',
+  ch:{},period:'today',
+  alerts:[],alertRules:[],
+  devices:[],totalW:380,
+  liveBuf:Array(80).fill(0),
+  pending:null,log:[],
+  confirmed:0,totalDet:0,
+  selSug:null,selAdd:null,
+  simInt:null,
+  obStep:0,
+  moreTab:'alerts',
+};
+
+/* ── ONBOARDING ── */
+function obNext(){
+  S.obStep++;
+  if(S.obStep>=4){obDone();return;}
+  document.querySelectorAll('.ob-step').forEach((s,i)=>s.classList.toggle('on',i===S.obStep));
+  document.querySelectorAll('.ob-dot').forEach((d,i)=>d.classList.toggle('on',i===S.obStep));
+  if(S.obStep===3)document.getElementById('ob-next').textContent='Commencer →';
+}
+function obDone(){const el=document.getElementById('ob');el.classList.add('out');setTimeout(()=>el.style.display='none',500);}
+
+/* ── NAV ── */
+function go(s){
+  document.querySelectorAll('.scr').forEach(e=>e.classList.remove('on'));
+  document.getElementById('s-'+s)?.classList.add('on');
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  if(s==='more'){renderMoreTab();}
+  if(s==='hist'&&S.mode){initHistChart();init12mChart();}
+  if(s==='nilm'){renderDevStack();renderSigGrid();}
+}
+
+/* ── TABS DANS "MORE" ── */
+function setMoreTab(btn,tab){
+  document.querySelectorAll('#more-tabs .pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');S.moreTab=tab;renderMoreTab();
+}
+function setTab(tab){
+  const pills=document.querySelectorAll('#more-tabs .pill');
+  const map={alerts:0,tips:1,compare:2};
+  pills.forEach((b,i)=>b.classList.toggle('on',i===map[tab]));
+  S.moreTab=tab;renderMoreTab();
+}
+function renderMoreTab(){
+  ['alerts','tips','compare'].forEach(t=>{
+    const el=document.getElementById('t-'+t);if(el)el.style.display=t===S.moreTab?'block':'none';
+  });
+  if(S.moreTab==='alerts')renderAlerts();
+  if(S.moreTab==='tips')renderTipsPage();
+  if(S.moreTab==='compare'){renderComp();initPricesChart();}
+}
+
+/* ── THEME ── */
+function toggleTheme(){
+  S.theme=S.theme==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',S.theme);
+  document.getElementById('meta-theme').content=S.theme==='dark'?'#1e1e1e':'#ffffff';
+  document.getElementById('t-tgl')?.classList.toggle('on',S.theme==='dark');
+  const svg=document.getElementById('tsv');
+  if(svg)svg.innerHTML=S.theme==='dark'?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  Chart.defaults.color=S.theme==='dark'?'rgba(110,122,134,.7)':'rgba(140,150,160,.7)';
+  Object.values(S.ch).forEach(c=>c?.update?.());
+}
+/* ── TOAST ── */
+function toast(msg,type='blue'){
+  const cols={green:'#4cd97b',red:'#ff6b88',blue:'#5b8dee',amber:'#ffa040',teal:'#2ec4b6',purple:'#a78bfa'};
+  const el=document.createElement('div');el.className='toast';
+  el.innerHTML=`<div class="toast-pip" style="background:${cols[type]||cols.blue};box-shadow:0 0 7px ${cols[type]||cols.blue};"></div><span>${msg}</span>`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>{el.style.transition='all .28s';el.style.opacity='0';el.style.transform='translateY(8px)';setTimeout(()=>el.remove(),300);},3500);
+}
+
+/* ── MODAL ── */
+function openM(id){document.getElementById(id)?.classList.add('on');}
+function closeM(id){document.getElementById(id)?.classList.remove('on');}
+
+/* ── UTILS ── */
+function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+function setText(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function setCap(fillId,valId,pct,val){
+  setTimeout(()=>{const f=document.getElementById(fillId);if(f)f.style.height=Math.max(4,pct)+'%';},120);
+  setText(valId,val);
+}
+
+/* ── HC WIDGET ── */
+function updateHC(){
+  const now=new Date();const h=now.getHours(),m=now.getMinutes();const nowM=h*60+m;
+  const hs=22*60+30,he=6*60+30;
+  let inHC=nowM>=hs||nowM<he,prog=0,cd='';
+  if(inHC){const tot=24*60-hs+he;const el=nowM>=hs?nowM-hs:(24*60-hs)+nowM;const rem=tot-el;prog=Math.min(100,(el/tot)*100);cd=`Encore ${Math.floor(rem/60)}h${String(rem%60).padStart(2,'0')} de tarif réduit`;}
+  else{const ts=hs-nowM;cd=`Dans ${Math.floor(ts/60)}h${String(ts%60).padStart(2,'0')}`;}
+  const orb=document.getElementById('hc-orb');if(orb)orb.textContent=inHC?'🌙':'☀️';
+  setText('hc-title',inHC?'Heures creuses actives':'Heures creuses');
+  setText('hc-sub',inHC?'Tarif réduit — profitez-en !':'De 22h30 à 6h30 · −30%');
+  setText('hc-cd',cd);const cdEl=document.getElementById('hc-cd');if(cdEl)cdEl.style.color=inHC?'var(--teal)':'var(--t2)';
+  const fg=document.getElementById('hc-fg');if(fg)fg.style.width=prog+'%';
+}
+
+/* ── CHIP ── */
+function updateChip(mode){
+  const c=document.getElementById('chip');const t=document.getElementById('chip-txt');if(!c||!t)return;
+  c.className='chip '+(mode||'');
+  t.textContent=mode==='ok'?'Linky connecté':mode==='demo'?'Mode démo':'Non connecté';
+}
+
+/* ── DEMO ── */
+function genR(){
+  const now=new Date();const r=[];
+  for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);const isW=d.getDay()===0||d.getDay()===6;const base=isW?13200:9600;const sea=Math.cos((d.getMonth()-6)*Math.PI/6)*1800;r.push({date:d.toISOString().split('T')[0],value:String(Math.round(Math.max(3500,base+sea+(Math.random()-.5)*2800)))});}
+  return r;
+}
+function startDemo(){
+  if(S.mode==='demo')return;S.mode='demo';
+  activate(null,{meter_reading:{interval_reading:genR()}},'demo');
+  toast('Mode démo activé — données simulées','amber');
+}
+
+/* ── ACTIVATE ── */
+function activate(pdl,apiData,mode){
+  S.mode=mode;S.pdl=pdl;updateChip(mode==='demo'?'demo':'ok');
+  show('home-on');hide('home-off');show('hist-on');hide('hist-off');
+  if(mode==='demo'){show('tips-on-m');hide('tips-off-m');}
+  if(mode==='live'){show('lk-on');hide('lk-off');}
+  if(pdl)setText('pdl-d','PDL : '+pdl);
+
+  // Alertes & règles par défaut
+  S.alertRules=[{ic:'⚡',t:'Puissance > 2 000 W',s:'Push + email · Immédiat',on:true},{ic:'💰',t:'Budget mensuel 80 %',s:'Email',on:true},{ic:'🌙',t:'Heures creuses',s:'Push · 15 min avant',on:true},{ic:'🤖',t:'Anomalie IA',s:'Push + email',on:true},{ic:'🏆',t:'Meilleure offre',s:'Push · Hebdo',on:false}];
+  S.alerts=[{id:1,pip:'r',t:'Pic détecté — 2 340W',d:'Dépassement du seuil de 2 000W pendant 8 min',m:'Il y a 14 min',read:false},{id:2,pip:'a',t:'Budget mensuel à 72 %',d:'57,6 € consommés sur votre budget de 80 €',m:'Il y a 2h',read:false},{id:3,pip:'t',t:'Heures creuses dans 1h05',d:'Tarif réduit dès 22h30',m:'Prochainement',read:true},{id:4,pip:'g',t:'Score Éco amélioré',d:'Votre score passe de 68 à 74/100',m:'Aujourd\'hui',read:true}];
+
+  // Appareils par défaut
+  if(!S.devices.length){
+    [{id:'frigo',on:true,w:95},{id:'tele',on:false,w:0},{id:'pc',on:true,w:265},{id:'chauffe-eau',on:false,w:0}].forEach(d=>{
+      const c=CAT.find(x=>x.id===d.id);if(!c)return;
+      S.devices.push({...c,on:d.on,curW:d.w,lc:0});if(d.on)S.totalW+=d.w;
+    });
+  }
+
+  updateAlertBadge();renderHomeAlerts();renderHomeTips();
+  parseData(apiData);initLiveChart();startSim();
+  renderDevStack();renderSigGrid();renderAddGrid();
+}
+
+/* ── PARSE DATA ── */
+function parseData(apiData){
+  const rd=apiData?.meter_reading?.interval_reading||[];if(!rd.length)return;
+  const twh=rd.reduce((s,r)=>s+parseInt(r.value||0),0);
+  const tk=(twh/1000).toFixed(1);
+  const wHP=twh*.65,wHC=twh*.35;
+  const cHP=wHP/1000*.2067,cHC=wHC/1000*.1470;
+
+  setText('kpi-k',tk);setText('kpi-c',(cHP+cHC).toFixed(2));
+  const tk1=document.getElementById('kpi-kt');if(tk1){tk1.textContent='↓ −6% vs hier';tk1.style.color='var(--green)';}
+  const tc1=document.getElementById('kpi-ct');if(tc1){tc1.textContent='↓ −0.18€ vs hier';tc1.style.color='var(--green)';}
+
+  const pkWh=Math.max(...rd.map(r=>parseInt(r.value||0)));
+  const co2=(tk*.052).toFixed(1);
+
+  // Capsules accueil
+  setCap('cf-hp','cv-hp',65,'65%');
+  setCap('cf-hc','cv-hc',35,'35%');
+  setCap('cf-pk','cv-pk',Math.min(94,pkWh/twh*rd.length*55),(pkWh/1000/.5).toFixed(1)+'kW');
+  setCap('cf-co','cv-co',Math.min(88,parseFloat(co2)/8*100),co2+'kg');
+
+  // Capsules historique
+  setCap('hcf1','hcv1',65,(wHP/1000).toFixed(0)+'kWh');
+  setCap('hcf2','hcv2',35,(wHC/1000).toFixed(0)+'kWh');
+  setCap('hcf3','hcv3',42,'42%');
+  setCap('hcf4','hcv4',58,'58%');
+
+  // Score donut
+  const score=Math.round(62+Math.random()*26);
+  setText('donut-v',score);
+  setTimeout(()=>{const a=document.getElementById('donut-arc');if(a){const d=402;a.style.strokeDashoffset=d-(d*score/100);}},300);
+  renderScoreFacts(score);
+
+  // Prévision
+  const diM=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
+  const fKwh=Math.round(twh/1000/rd.length*diM);const fCost=(fKwh*.2067+13.58).toFixed(2);
+  const dp=Math.round((Math.random()-.4)*20);
+  setText('fc-k',fKwh+' kWh');setText('fc-e',fCost+' €');
+  const fd=document.getElementById('fc-d');if(fd){fd.textContent=(dp>0?'+':'')+dp+'%';fd.style.color=dp>0?'var(--rose)':'var(--green)';}
+  show('fc-c');
+
+  // Bilan
+  setText('h-hp',(wHP/1000).toFixed(1));setText('h-hc',(wHC/1000).toFixed(1));
+  setText('h-chp',cHP.toFixed(2));setText('h-chc',cHC.toFixed(2));
+  buildJournal(rd);
+
+  // Compare
+  const ki=document.getElementById('kwh-in');const kh=document.getElementById('kwh-hint');
+  if(ki)ki.value=Math.round(parseFloat(tk));if(kh)kh.style.display='block';
+  renderComp();buildMainChart(rd);
+}
+
+function renderScoreFacts(score){
+  const el=document.getElementById('score-facts');if(!el)return;
+  const g=score>=75?'var(--green)':score>=60?'var(--amber)':'var(--rose)';
+  const gr=score>=85?'A+':score>=75?'A':score>=65?'B+':score>=55?'B':'C';
+  el.innerHTML=`
+    <div style="font-size:.65rem;font-family:var(--fm);font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Score Éco</div>
+    <div style="font-size:1.1rem;font-weight:900;font-family:var(--fm);color:${g};">Classe ${gr}</div>
+    <div style="height:1px;background:var(--bg-2);margin:8px 0;"></div>
+    ${[{d:'var(--green)',t:'−18% vs votre quartier'},{d:score>70?'var(--green)':'var(--amber)',t:score>70?'Bonne gestion HC':'Améliorer HC'},{d:'var(--blue)',t:'CO₂ évité : 4.8 kg/mois'}].map(f=>`<div style="display:flex;align-items:center;gap:7px;font-size:.77rem;"><div style="width:6px;height:6px;border-radius:50%;background:${f.d};box-shadow:0 0 5px ${f.d};flex-shrink:0;"></div><span style="color:var(--t2);">${f.t}</span></div>`).join('')}`;
+}
+
+/* ── TIPS ── */
+function renderHomeTips(){
+  const el=document.getElementById('home-tips');if(!el)return;
+  el.innerHTML=TIPS.slice(0,2).map(t=>tipHtml(t)).join('');
+}
+function renderTipsPage(){
+  const off=document.getElementById('tips-off-m');const on=document.getElementById('tips-on-m');const list=document.getElementById('tips-list');
+  if(!S.mode){if(off)off.style.display='block';if(on)on.style.display='none';return;}
+  if(off)off.style.display='none';if(on)on.style.display='block';
+  if(list)list.innerHTML=TIPS.map(t=>tipHtml(t)).join('');
+}
+function tipHtml(t){
+  const dc={Facile:'var(--green)',Investissement:'var(--amber)',Recommandé:'var(--rose)'}[t.df]||'var(--t3)';
+  return `<div class="tip"><div class="tip-ic">${t.ic}</div><div class="tip-b"><div class="tip-t">${t.t}</div><div class="tip-d">${t.d}</div><div class="tip-sv">↓ ${t.sv} <span style="font-size:.66rem;font-weight:600;padding:2px 8px;border-radius:var(--r-pill);background:var(--bg);box-shadow:var(--s-in);color:${dc};">${t.df}</span></div><div class="tip-ap" onclick="toast('✓ Conseil appliqué — +${t.sv}','green')">Appliquer →</div></div></div>`;
+}
+
+/* ── ALERTS ── */
+function updateAlertBadge(){const n=S.alerts.filter(a=>!a.read).length;const b=document.getElementById('nb-badge');if(b)b.style.display=n>0?'block':'none';}
+function renderHomeAlerts(){
+  const el=document.getElementById('home-alerts');if(!el)return;
+  const active=S.alerts.filter(a=>!a.read).slice(0,2);
+  if(!active.length){el.innerHTML=`<div class="al"><div class="al-pip g"></div><div class="al-b"><div class="al-t">Tout est normal</div><div class="al-d">Aucune alerte active.</div></div></div>`;return;}
+  el.innerHTML=active.map(a=>`<div class="al"><div class="al-pip ${a.pip}"></div><div class="al-b"><div class="al-t">${a.t}</div><div class="al-d">${a.d}</div><div class="al-m">${a.m}</div></div><button class="al-x" onclick="dismissAl(${a.id})">✕</button></div>`).join('');
+}
+function renderAlerts(){
+  const le=document.getElementById('al-live');const re=document.getElementById('al-rules');if(!le||!re)return;
+  if(!S.alerts.length){le.innerHTML=`<div class="empty"><div class="ei">🔔</div><div class="et">Connectez votre Linky ou lancez le mode démo.</div></div>`;re.innerHTML='';return;}
+  le.innerHTML=S.alerts.map(a=>`<div class="al"><div class="al-pip ${a.pip}" style="${a.read?'opacity:.3':''}"></div><div class="al-b"><div class="al-t" style="${a.read?'opacity:.5':''}">${a.t}</div><div class="al-d">${a.d}</div><div class="al-m">${a.m}${a.read?' · Lue':''}</div></div>${!a.read?`<button class="al-x" onclick="dismissAl(${a.id})">✕</button>`:''}</div>`).join('');
+  re.innerHTML=S.alertRules.map((r,i)=>`<div class="al-rule"><div class="al-rule-ic">${r.ic}</div><div class="al-rule-b"><div class="al-rule-t">${r.t}</div><div class="al-rule-s">${r.s}</div></div><div class="tog ${r.on?'on':''}" onclick="togRule(${i})"></div></div>`).join('');
+}
+function dismissAl(id){const a=S.alerts.find(x=>x.id===id);if(a)a.read=true;updateAlertBadge();renderHomeAlerts();renderAlerts();toast('Alerte lue','teal');}
+function togRule(i){if(S.alertRules[i]){S.alertRules[i].on=!S.alertRules[i].on;renderAlerts();toast(S.alertRules[i].on?'✓ Alerte activée':'Alerte désactivée',S.alertRules[i].on?'green':'amber');}}
+function addAlertRule(){const type=document.getElementById('al-type')?.value;const val=document.getElementById('al-val')?.value;const lbls={power:'Puissance',budget_month:'Budget',anomaly:'Anomalie IA',offpeak:'Heures creuses',offer:'Meilleure offre'};const ics={power:'⚡',budget_month:'💰',anomaly:'🤖',offpeak:'🌙',offer:'🏆'};S.alertRules.push({ic:ics[type]||'🔔',t:`${lbls[type]||type}${val?' > '+val:''}`,s:'Push · Actif',on:true});renderAlerts();toast('✓ Alerte créée','green');}
+function addAlertM(){const type=document.getElementById('m-at')?.value;const val=document.getElementById('m-av')?.value;closeM('m-alert');const lbls={power:'Puissance',budget_month:'Budget',offpeak:'Heures creuses',offer:'Meilleure offre'};const ics={power:'⚡',budget_month:'💰',offpeak:'🌙',offer:'🏆'};S.alertRules.push({ic:ics[type]||'🔔',t:`${lbls[type]||type}${val?' > '+val:''}`,s:'Push · Actif',on:true});renderAlerts();toast('✓ Alerte créée','green');}
+
+/* ── COMPARE ── */
+function renderComp(){
+  const kwh=parseFloat(document.getElementById('kwh-in')?.value);const el=document.getElementById('comp-list');if(!el)return;
+  if(!kwh||kwh<=0){el.innerHTML='<div class="empty"><div class="ei">⇌</div><div class="et">Entrez votre consommation pour comparer</div></div>';return;}
+  const kH=kwh*.65,kC=kwh*.35;
+  const wc=COMP.map(c=>({...c,cost:c.hc?c.hp*kH+c.hc*kC+c.abo:c.hp*kwh+c.abo})).sort((a,b)=>a.cost-b.cost);
+  const ref=wc.find(c=>c.n==='EDF'&&!c.hc)?.cost||wc[0].cost;
+  el.innerHTML=wc.map((c,i)=>{const sv=(ref-c.cost).toFixed(2);const best=i===0;return `<div class="ci ${best?'best':''}"><div class="ci-rank ${best?'gold':''}">${i+1}</div><div class="ci-b"><div class="ci-n">${c.n}${c.eco?' <span style="font-size:.6rem;color:var(--teal);">🌿</span>':''}</div><div class="ci-o">${c.o}</div></div><div class="ci-r"><div class="ci-p" style="color:${best?'var(--blue)':'var(--t1)'};">${c.cost.toFixed(2)} €</div><div class="ci-s" style="color:${parseFloat(sv)>0?'var(--green)':'var(--t3)'};">${parseFloat(sv)>0?'−'+sv+' €':'référence'}</div><button style="font-size:.66rem;color:var(--blue);font-weight:700;font-family:var(--fm);margin-top:4px;" onclick="toast('📧 ${c.n} — demande envoyée','blue')">Voir →</button></div></div>`;}).join('');
+}
+
+/* ── CHARTS ── */
+Chart.defaults.color='rgba(140,150,160,.7)';Chart.defaults.font.family="'Nunito',sans-serif";Chart.defaults.font.size=10;
+function co(h=185){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:S.theme==='dark'?'rgba(30,30,30,.97)':'rgba(255,255,255,.97)',borderColor:'rgba(0,0,0,.06)',borderWidth:1,titleColor:S.theme==='dark'?'#e8eaed':'#2c3e50',bodyColor:'rgba(127,140,153,.9)',padding:10,cornerRadius:12}},scales:{x:{grid:{color:'rgba(0,0,0,.03)'},border:{color:'transparent'},ticks:{maxRotation:0}},y:{grid:{color:'rgba(0,0,0,.04)'},border:{color:'transparent'}}}};}
+
+function buildMainChart(rd){
+  if(S.ch.main){S.ch.main.destroy();delete S.ch.main;}
+  const c=document.getElementById('c-main');if(!c)return;
+  const lb=rd.map(r=>{const d=new Date(r.date);return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});});
+  const vl=rd.map(r=>+(parseInt(r.value)/1000).toFixed(2));
+  const ctx=c.getContext('2d');const g=ctx.createLinearGradient(0,0,0,185);
+  g.addColorStop(0,'rgba(91,141,238,.22)');g.addColorStop(1,'rgba(91,141,238,0)');
+  S.ch.main=new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{data:vl,fill:true,backgroundColor:g,borderColor:'rgba(91,141,238,.8)',borderWidth:2,tension:.42,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:'#5b8dee'}]},options:co()});
+}
+function initHistChart(){if(S.ch.hist)return;const ctx=document.getElementById('c-hist')?.getContext('2d');if(!ctx)return;const lb=Array.from({length:24},(_,i)=>i%4===0?i+'h':'');const td=Array.from({length:24},()=>+(0.18+Math.random()*.88).toFixed(2));const yd=td.map(v=>+(v*(.8+Math.random()*.4)).toFixed(2));S.ch.hist=new Chart(ctx,{type:'bar',data:{labels:lb,datasets:[{label:"Aujourd'hui",data:td,backgroundColor:'rgba(91,141,238,.5)',borderRadius:7,borderWidth:0},{label:'Hier',data:yd,backgroundColor:'rgba(168,181,200,.2)',borderRadius:7,borderWidth:0}]},options:{...co(),plugins:{...co().plugins,legend:{display:true,labels:{color:Chart.defaults.color,boxWidth:10,borderRadius:3,font:{size:10}}}}}});}
+function init12mChart(){if(S.ch.m12)return;const ctx=document.getElementById('c-12m')?.getContext('2d');if(!ctx)return;const mn=['Avr','Mai','Jui','Jul','Aoû','Sep','Oct','Nov','Déc','Jan','Fév','Mar'];const vl=[260,230,240,310,340,295,280,320,305,290,315,287];S.ch.m12=new Chart(ctx,{type:'bar',data:{labels:mn,datasets:[{data:vl,backgroundColor:vl.map((_,i)=>i===11?'rgba(91,141,238,.75)':'rgba(91,141,238,.35)'),borderRadius:8,borderWidth:0}]},options:co(155)});}
+function buildJournal(rd){const el=document.getElementById('journal');if(!el)return;const l7=[...rd].reverse().slice(0,7);el.innerHTML=l7.map(r=>{const d=new Date(r.date);const k=(parseInt(r.value)/1000).toFixed(2);const e=(k*.2023).toFixed(2);return `<div class="lr"><div class="lr-ic">⚡</div><div class="lr-b"><div class="lr-t">${d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}</div><div class="lr-s">${k} kWh</div></div><div class="lr-r"><div class="lr-v" style="color:var(--amber);">${e} €</div></div></div>`;}).join('');}
+function initPricesChart(){if(S.ch.pr)return;const ctx=document.getElementById('c-prices')?.getContext('2d');if(!ctx)return;S.ch.pr=new Chart(ctx,{type:'line',data:{labels:['Oct','Nov','Déc','Jan','Fév','Mar'],datasets:[{label:'EDF',data:[.2268,.2270,.2272,.2280,.2290,.2516],borderColor:'rgba(255,160,64,.8)',borderWidth:2,tension:.3,pointRadius:3,fill:false},{label:'Engie',data:[.1855,.1850,.1845,.1842,.1840,.1842],borderColor:'rgba(76,217,123,.8)',borderWidth:2,tension:.3,pointRadius:3,fill:false},{label:'Octopus',data:[.1800,.1790,.1780,.1775,.1780,.1780],borderColor:'rgba(91,141,238,.8)',borderWidth:2,tension:.3,pointRadius:3,fill:false}]},options:{...co(160),plugins:{...co(160).plugins,legend:{display:true,labels:{color:Chart.defaults.color,boxWidth:10,borderRadius:3,font:{size:10}}}}}});}
+
+/* ── NILM LIVE ── */
+function initLiveChart(){
+  const ctx=document.getElementById('c-live')?.getContext('2d');if(!ctx||S.ch.live)return;
+  const g=ctx.createLinearGradient(0,0,0,80);g.addColorStop(0,'rgba(91,141,238,.2)');g.addColorStop(1,'rgba(91,141,238,0)');
+  S.ch.live=new Chart(ctx,{type:'line',data:{labels:Array(80).fill(''),datasets:[{data:[...S.liveBuf],fill:true,backgroundColor:g,borderColor:'rgba(91,141,238,.7)',borderWidth:1.5,tension:.35,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false,min:0,max:5000}}}});
+}
+function updateWatt(w){
+  S.liveBuf.push(w);S.liveBuf.shift();
+  const arc=document.getElementById('w-arc');const pct=Math.min(1,w/4000);const ci=427;
+  if(arc){arc.style.strokeDashoffset=ci*(1-pct);arc.style.stroke=w>3000?'#ff6b88':w>2000?'#ffa040':'url(#wrg)';}
+  setText('w-val',w.toLocaleString('fr-FR'));
+  const lb=document.getElementById('w-lbl');if(lb)lb.textContent=w<100?'Veilles':w<500?'Faible':w<1500?'Normal':w<2500?'Élevé':'⚠️ Très élevé';
+  if(S.ch.live){S.ch.live.data.datasets[0].data=[...S.liveBuf];S.ch.live.update('none');}
+}
+function startSim(){
+  if(S.simInt)return;
+  S.simInt=setInterval(()=>{
+    const noise=(Math.random()-.5)*60;const dn=S.devices.filter(d=>d.on).reduce((s,d)=>s+(Math.random()-.5)*d.w*.05,0);
+    updateWatt(Math.max(80,Math.round(S.totalW+noise+dn)));
+  },600);
+}
+
+/* ── DEVICE STACK ── */
+function renderDevStack(){
+  const el=document.getElementById('dev-stack');if(!el)return;
+  if(!S.devices.length){el.innerHTML=`<div style="text-align:center;padding:22px;color:var(--t3);font-size:.84rem;">Aucun appareil — appuyez sur + pour en ajouter</div>`;return;}
+  const tot=S.devices.filter(d=>d.on).reduce((s,d)=>s+d.curW,0)||1;
+  el.innerHTML=S.devices.map((d,i)=>{
+    const pct=d.on?Math.round((d.curW/tot)*100):0;
+    const cf=d.lc>5?'hi':d.lc>2?'mid':'lo';const ct=d.lc>5?'Haute conf.':d.lc>2?'Apprend…':'Nouveau';
+    return `<div class="dev-row ${d.on?'':'off'}" style="--dc:${d.col};"><div class="dev-ic">${d.ic}</div><div class="dev-b"><div style="display:flex;align-items:center;gap:7px;"><div class="dev-n">${d.n}</div><span class="conf ${cf}">${ct}</span></div><div class="dev-w">${d.on?d.curW+'W · actif':'Éteint'}</div><div class="dev-bg"><div class="dev-bf" style="width:${pct}%;background:${d.col};"></div></div></div><div class="dev-r"><div class="dev-pct" style="color:${d.col};">${d.on?pct+'%':'—'}</div><div class="dev-st">${d.on?'~'+((d.curW/1000)*.2023).toFixed(3)+'€/h':'Off'}</div></div><div class="tog ${d.on?'on':''}" onclick="togDev(${i})" style="margin-left:6px;"></div></div>`;
+  }).join('');
+}
+function togDev(i){
+  const d=S.devices[i];d.on=!d.on;
+  if(d.on){d.curW=Math.round(d.w*(.88+Math.random()*.14));S.totalW+=d.curW;toast(`${d.ic} ${d.n} allumé +${d.curW}W`,'blue');}
+  else{S.totalW=Math.max(80,S.totalW-d.curW);d.curW=0;toast(`${d.ic} ${d.n} éteint`,'amber');}
+  renderDevStack();
+}
+
+/* ── NILM AI ── */
+function simNILM(){
+  const uk=CAT.filter(c=>!S.devices.find(d=>d.id===c.id&&d.on));
+  if(!uk.length){toast('Tous les appareils sont allumés !','amber');return;}
+  const tg=uk[Math.floor(Math.random()*uk.length)];
+  const dt=Math.round(tg.w*(.9+Math.random()*.2));
+  S.totalW+=dt;S.pending={tg,dt};S.totalDet++;
+  setTimeout(()=>trigDet(tg,dt),800);
+}
+function trigDet(tg,dt){
+  const cands=CAT.filter(d=>dt>=d.rng[0]*.7&&dt<=d.rng[1]*1.3).sort((a,b)=>Math.abs(a.w-dt)-Math.abs(b.w-dt)).slice(0,4);
+  const top=cands[0];const conf=top?Math.round(Math.max(55,95-Math.abs(top.w-dt)/top.w*100)):40;
+  document.getElementById('ai-panel')?.classList.add('on');
+  const qEl=document.getElementById('ai-q');
+  if(qEl)qEl.innerHTML=conf>80?`Je détecte <strong>+${dt}W</strong>. Est-ce votre <strong>${top?.n}</strong> ?`:`J'ai détecté <strong>+${dt}W</strong>. Quel appareil venez-vous de brancher ?`;
+  setText('ai-dv',`+${dt} W`);
+  S.selSug=conf>75?cands[0]?.id:null;
+  const sg=document.getElementById('ai-sg');
+  if(sg)sg.innerHTML=cands.map((c,i)=>{const mc=Math.round(Math.max(40,92-Math.abs(c.w-dt)/c.w*100));return `<button class="sb-btn ${i===0&&conf>75?'sel':''}" onclick="selSug(this,'${c.id}')"><div class="sb-icon">${c.ic}</div><div class="sb-name">${c.n}</div><div class="sb-w">${c.w}W · ${mc}%</div></button>`;}).join('');
+  S.log.unshift({ic:top?.ic||'⚡',t:`Détection : +${dt}W`,d:`Meilleure correspondance : ${top?.n||'Inconnu'} (${conf}% conf.)`,m:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),conf,done:false,pending:true});
+  updateLbar();renderDetLog();
+}
+function selSug(btn,id){document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');S.selSug=id;}
+function confirmDet(){
+  if(!S.pending)return;
+  document.getElementById('ai-panel')?.classList.remove('on');
+  const did=S.selSug||S.pending.tg.id;const c=CAT.find(d=>d.id===did);if(!c){skipDet();return;}
+  let dev=S.devices.find(d=>d.id===did);
+  if(dev){dev.on=true;dev.curW=S.pending.dt;dev.lc++;}
+  else S.devices.push({...c,on:true,curW:S.pending.dt,lc:1});
+  S.confirmed++;S.pending=null;
+  const l=S.log.find(x=>x.pending);if(l){l.done=true;l.pending=false;}
+  updateLbar();renderDevStack();renderDetLog();
+  toast(`✓ ${c.ic} ${c.n} confirmé ! IA a appris.`,'green');
+  if(S.confirmed===3)setTimeout(()=>toast('🤖 L\'IA reconnaît maintenant les appareils similaires automatiquement','purple'),1500);
+}
+function skipDet(){document.getElementById('ai-panel')?.classList.remove('on');const l=S.log.find(x=>x.pending);if(l)l.pending=false;S.pending=null;}
+function updateLbar(){
+  const pct=Math.min(100,(S.confirmed/20)*100);
+  const f=document.getElementById('lbar-f');const l=document.getElementById('lbar-l');
+  if(f)f.style.width=pct+'%';
+  if(l){const lv=pct>=75?'Expert':pct>=40?'Intermédiaire':pct>=15?'Apprenti':'Débutant';l.textContent=`IA · ${Math.round(pct)}% — ${lv}`;l.style.color=pct>=75?'var(--green)':pct>=40?'var(--amber)':'var(--blue)';}
+}
+function renderDetLog(){
+  const el=document.getElementById('log-home');if(!el)return;
+  if(!S.log.length){el.innerHTML=`<div class="empty"><div class="ei">🤖</div><div class="et">Simulez un branchement pour tester la détection IA</div></div>`;return;}
+  el.innerHTML=S.log.slice(0,5).map(l=>{
+    const p=l.done?'g':l.pending?'a':'r';const cc=l.conf>80?'hi':l.conf>60?'mid':'lo';
+    return `<div class="lr"><div style="width:8px;height:8px;border-radius:50%;background:var(--${p==='g'?'green':p==='a'?'amber':'rose'});box-shadow:0 0 6px var(--${p==='g'?'green':p==='a'?'amber':'rose'});flex-shrink:0;"></div><div class="lr-b"><div class="lr-t">${l.ic} ${l.t}</div><div class="lr-s">${l.d}</div><div style="font-size:.61rem;font-family:var(--fm);color:var(--t3);margin-top:3px;">${l.m} · ${l.done?'✓ Confirmé':l.pending?'⏳ En attente':'Ignoré'}</div>${!l.pending?`<span class="conf ${cc}">${l.conf}% conf.</span>`:''}</div></div>`;
+  }).join('');
+}
+function renderSigGrid(){
+  const el=document.getElementById('sig-grid');if(!el)return;
+  const show=CAT.slice(0,4);
+  el.innerHTML=show.map(d=>`<div class="card" style="padding:14px;margin-bottom:0;"><div style="font-size:.75rem;font-weight:700;color:${d.col};margin-bottom:2px;">${d.ic} ${d.n}</div><div style="font-size:.65rem;color:var(--t2);margin-bottom:8px;">${d.pat==='flat'?'Bloc plat':d.pat==='rise'?'Montée progressive':d.pat==='cycles'?'Cycles réguliers':'Court et intense'}</div><div style="height:48px;"><canvas id="sig-${d.id}"></canvas></div></div>`).join('');
+  setTimeout(()=>{
+    const pats={flat:[0,0,1,1,1,1,1,0,0],rise:[0,.3,.6,.85,1,.95,.9,0,0],cycles:[0,1,1,0,0,1,1,0,0],short:[0,0,1,1,1,0,0,0,0]};
+    show.forEach(d=>{const ctx=document.getElementById(`sig-${d.id}`)?.getContext('2d');if(!ctx)return;new Chart(ctx,{type:'line',data:{labels:Array(9).fill(''),datasets:[{data:pats[d.pat].map(v=>v*d.w),borderColor:d.col,borderWidth:2,tension:.3,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});});
+  },50);
+}
+
+/* ── ADD DEVICE ── */
+function renderAddGrid(){
+  const el=document.getElementById('add-grid');if(!el)return;
+  S.selAdd=null;
+  el.innerHTML=CAT.map(d=>`<button class="sb-btn" onclick="selAddDev(this,'${d.id}')"><div class="sb-icon">${d.ic}</div><div class="sb-name" style="font-size:.66rem;">${d.n}</div><div class="sb-w">${d.w}W</div></button>`).join('');
+}
+function selAddDev(btn,id){
+  document.querySelectorAll('#add-grid .sb-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');S.selAdd=id;
+  const c=CAT.find(d=>d.id===id);if(c){document.getElementById('c-name').value=c.n;document.getElementById('c-watts').value=c.w;}
+}
+function addDev(){
+  const name=document.getElementById('c-name').value.trim();const w=parseInt(document.getElementById('c-watts').value)||0;
+  if(!name||!w){toast('Remplissez le nom et la puissance','red');return;}
+  const cat=S.selAdd?CAT.find(d=>d.id===S.selAdd):null;
+  const nd={id:cat?.id||('c-'+Date.now()),n:name,ic:cat?.ic||'🔌',w,rng:cat?.rng||[w*.8,w*1.2],col:cat?.col||'#a78bfa',pat:cat?.pat||'flat',on:false,curW:0,lc:0};
+  if(S.devices.find(d=>d.id===nd.id)){toast('Appareil déjà ajouté','amber');return;}
+  S.devices.push(nd);closeM('m-add');renderDevStack();
+  toast(`${nd.ic} ${name} ajouté !`,'green');
+  document.getElementById('c-name').value='';document.getElementById('c-watts').value='';
+}
+
+/* ── PERIOD ── */
+function setPeriod(btn,p){document.querySelectorAll('#home-pills .pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');S.period=p;const lb={today:'Courbe du jour',week:'7 derniers jours',month:'Ce mois-ci',year:'Cette année'};setText('chart-lbl',lb[p]||'');}
+function setHistP(btn,p){document.querySelectorAll('#s-hist .pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');const lb={day:'Courbe horaire',week:'7 jours',month:'30 jours',year:'12 mois'};setText('hist-lbl',lb[p]||'');}
+
+/* ── MISC ── */
+function valPdl(){const ok=/^\d{14}$/.test(document.getElementById('pdl-in').value);const btn=document.getElementById('pdl-btn');if(btn){btn.disabled=!ok;btn.style.opacity=ok?'1':'.45';}}
+function disconnect(){S.mode=null;S.pdl=null;S.alerts=[];S.alertRules=[];updateChip(null);hide('home-on');show('home-off');hide('hist-on');show('hist-off');hide('lk-on');show('lk-off');clearInterval(S.simInt);S.simInt=null;Object.values(S.ch).forEach(c=>c?.destroy?.());S.ch={};updateAlertBadge();toast('Compteur déconnecté','amber');}
+function saveManual(){const hp=document.getElementById('i-hp')?.value;const hc=document.getElementById('i-hc')?.value;const dt=document.getElementById('i-dt')?.value;if(!hp||!hc||!dt){toast('Remplissez tous les champs','red');return;}toast('✓ Relevé enregistré','green');}
+
+/* ── PTR ── */
+let ty=0;
+document.addEventListener('touchstart',e=>{if(window.scrollY===0)ty=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchmove',e=>{if(window.scrollY===0&&e.touches[0].clientY-ty>60&&S.mode){const p=document.getElementById('ptr');if(p)p.classList.add('on');}},{passive:true});
+document.addEventListener('touchend',()=>{const p=document.getElementById('ptr');if(p&&p.classList.contains('on')){setTimeout(()=>{p.classList.remove('on');toast('✓ Données actualisées','teal');},1200);}});
+
+/* ══════════════════════════════════════
+   GESTION DES PUBLICITÉS
+   ══════════════════════════════════════ */
+
+// Clé localStorage pour le statut premium
+const AD_KEY = 'energyx_premium';
+
+// Vérifie si l'utilisateur est premium (pas de pub)
+function isPremium() {
+  return localStorage.getItem(AD_KEY) === 'true';
+}
+
+// Active le mode premium (supprime les pubs)
+function activatePremium() {
+  localStorage.setItem(AD_KEY, 'true');
+  S.isPremium = true;
+  hideAllAds();
+  toast('⭐ Mode Premium activé — publicités supprimées !', 'green');
+}
+
+// Cache toutes les zones publicitaires
+function hideAllAds() {
+  document.querySelectorAll('.ad-wrap').forEach(el => {
+    el.style.display = 'none';
+  });
+}
+
+// Initialise les publicités
+function initAds() {
+  // Si premium → pas de pub
+  if (isPremium()) {
+    hideAllAds();
+    return;
+  }
+
+  // En production avec AdSense chargé → les ins sont auto-remplis
+  // En développement (fichier local) → afficher un placeholder visuel
+  const isAdSenseLoaded = typeof window.adsbygoogle !== 'undefined';
+
+  if (!isAdSenseLoaded) {
+    // Mode dev : afficher des placeholders neumorphiques
+    renderAdPlaceholders();
+  }
+  // Si AdSense est chargé, il remplit automatiquement les <ins>
+}
+
+// Placeholders pour prévisualisation (remplacés par de vraies pubs en prod)
+function renderAdPlaceholders() {
+  const ADS_PREVIEW = [
+    {
+      slot: '1111111111',
+      label: '🏠 Économisez sur votre assurance habitation',
+      sub: 'Comparez les offres en 2 minutes',
+      cta: 'Comparer',
+      icon: '🏠'
+    },
+    {
+      slot: '2222222222',
+      label: '⚡ Passez à l\'énergie verte avec Engie',
+      sub: 'Offre exclusive EnergyX — −10% la 1ère année',
+      cta: 'Voir l\'offre',
+      icon: '🌿'
+    },
+    {
+      slot: '3333333333',
+      label: '☀️ Panneaux solaires — devis gratuit',
+      sub: 'Aides 2025 disponibles · ROI en 7 ans',
+      cta: 'Devis gratuit',
+      icon: '☀️'
+    },
+    {
+      slot: '4444444444',
+      label: '📱 App Budget Pro — gérez vos finances',
+      sub: 'Compatible EnergyX · Essai 30 jours',
+      cta: 'Télécharger',
+      icon: '💰'
+    },
+  ];
+
+  document.querySelectorAll('.ad-wrap').forEach((wrap, i) => {
+    const ad = ADS_PREVIEW[i % ADS_PREVIEW.length];
+    const insEl = wrap.querySelector('ins.adsbygoogle');
+    const scriptEl = wrap.querySelector('script');
+
+    // Remplacer le ins par un native ad neumorphique
+    if (insEl) insEl.remove();
+    if (scriptEl) scriptEl.remove();
+
+    const adHtml = `
+      <div class="ad-native">
+        <div class="ad-native-icon">${ad.icon}</div>
+        <div class="ad-native-body">
+          <div class="ad-native-title">${ad.label}</div>
+          <div class="ad-native-sub">${ad.sub}</div>
+        </div>
+        <button class="ad-native-cta" onclick="toast('↗ Ouverture de l\\'annonceur…', 'blue')">${ad.cta}</button>
+      </div>
+    `;
+
+    // Retirer le ::before "Publicité" et l'ajouter proprement
+    wrap.innerHTML = adHtml;
+    wrap.style.position = 'relative';
+
+    // Re-ajouter le label discret
+    const label = document.createElement('div');
+    label.style.cssText = 'font-size:.54rem;font-weight:600;color:var(--t3);font-family:var(--fm);text-transform:uppercase;letter-spacing:1.2px;text-align:center;margin-bottom:5px;';
+    label.textContent = 'Publicité';
+    wrap.insertBefore(label, wrap.firstChild);
+  });
+}
+
+/* ── SAVE SETTINGS — avec gestion premium ── */
+function saveSet() {
+  const n = document.getElementById('s-name')?.value;
+  toast(n ? `✓ Bonjour ${n.split(' ')[0]} — sauvegardé` : '✓ Paramètres sauvegardés', 'green');
+}
+
+/* ══════════════════════════════════════ */
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  const dt=document.getElementById('i-dt');if(dt)dt.value=new Date().toISOString().split('T')[0];
+  initPricesChart();updateHC();
+  setInterval(updateHC,30000);
+  setInterval(()=>{if(S.mode)renderHomeAlerts();},5000);
+
+  // Initialiser les pubs AdSense (si disponible)
+  initAds();
+
+  // Injecter le PWA manifest dynamiquement
+  injectPWAManifest();
+
+  // Enregistrer le Service Worker (si supporté)
+  registerSW();
+
+  setTimeout(()=>toast('⚡ EnergyX v4 — Pure Neumorphism','blue'),900);
+  setTimeout(()=>toast('💡 Lancez le mode démo pour explorer !','purple'),2800);
+});
+
+/* ══════════════════════════════════════
+   PWA — Installable sur mobile
+   ══════════════════════════════════════ */
+function injectPWAManifest() {
+  const manifest = {
+    name: "EnergyX — Suivi Énergétique",
+    short_name: "EnergyX",
+    description: "Suivez votre consommation électrique en temps réel avec IA.",
+    start_url: "/",
+    display: "standalone",
+    orientation: "portrait-primary",
+    background_color: "#ffffff",
+    theme_color: "#5b8dee",
+    categories: ["utilities", "productivity"],
+    lang: "fr",
+    icons: [
+      {
+        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%235b8dee'/><stop offset='100%25' stop-color='%232ec4b6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><path d='M58 12L28 52h22L46 88L72 48H50L58 12z' fill='white'/></svg>",
+        sizes: "192x192",
+        type: "image/svg+xml",
+        purpose: "any maskable"
+      }
+    ],
+    screenshots: [],
+    shortcuts: [
+      {
+        name: "Tableau de bord",
+        url: "/?screen=home",
+        description: "Voir ma consommation en temps réel"
+      },
+      {
+        name: "IA Détection",
+        url: "/?screen=nilm",
+        description: "Détecter mes appareils"
+      }
+    ]
+  };
+
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.getElementById('pwa-manifest');
+  if (link) link.href = url;
+
+  // Prompt d'installation PWA
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Afficher un toast d'installation après 10s
+    setTimeout(() => {
+      if (deferredPrompt) {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.style.cssText = 'cursor:pointer;';
+        t.innerHTML = `<div class="toast-pip" style="background:#5b8dee;box-shadow:0 0 7px #5b8dee;"></div><span>📲 Installer EnergyX sur votre écran d'accueil</span>`;
+        t.onclick = async () => {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') toast('✅ EnergyX installé !', 'green');
+          deferredPrompt = null;
+          t.remove();
+        };
+        document.getElementById('toasts')?.appendChild(t);
+        setTimeout(() => { t.style.transition='all .28s';t.style.opacity='0';setTimeout(()=>t.remove(),300); }, 8000);
+      }
+    }, 10000);
+  });
+}
+
+/* ══════════════════════════════════════
+   SERVICE WORKER — Offline support
+   ══════════════════════════════════════ */
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+
+  // Service worker inline via blob (pas besoin de fichier séparé)
+  const swCode = `
+    const CACHE = 'energyx-v4';
+    const ASSETS = ['/'];
+
+    self.addEventListener('install', e => {
+      e.waitUntil(
+        caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+      );
+    });
+
+    self.addEventListener('activate', e => {
+      e.waitUntil(
+        caches.keys().then(keys =>
+          Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+        ).then(() => self.clients.claim())
+      );
+    });
+
+    self.addEventListener('fetch', e => {
+      if (e.request.method !== 'GET') return;
+      e.respondWith(
+        caches.match(e.request).then(cached => {
+          const network = fetch(e.request).then(res => {
+            if (res.ok) {
+              const clone = res.clone();
+              caches.open(CACHE).then(c => c.put(e.request, clone));
+            }
+            return res;
+          });
+          return cached || network;
+        })
+      );
+    });
+  `;
+
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl)
+    .then(() => console.log('EnergyX SW registered'))
+    .catch(() => {});
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+   GOOGLE ANALYTICS 4
+   ⚠️  Remplacez G-XXXXXXXXXX par votre
+       Measurement ID (analytics.google.com)
+   ═══════════════════════════════════════════ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    page_title: 'EnergyX',
+    page_location: window.location.href,
+    // Paramètres personnalisés EnergyX
+    custom_map: {
+      'dimension1': 'user_mode',   // demo ou linky
+      'dimension2': 'is_premium'
+    }
+  });
+
+  // Tracker les événements clés
+  function trackEvent(action, category, label) {
+    gtag('event', action, {
+      event_category: category,
+      event_label: label,
+    });
+  }
+</script>
+</body>
+</html>
