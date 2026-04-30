@@ -1,0 +1,16 @@
+{
+  "name": "mon-projet",
+  "version": "1.0.0",
+  "description": "Description de mon projet",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Aucun test spécifié\" && exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}
