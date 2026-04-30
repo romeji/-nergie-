@@ -1,14 +1,21 @@
 {
-  "name": "mon-backend-ts",
+  "name": "mon-projet-next",
   "version": "1.0.0",
-  "main": "index.tsx",
+  "private": true,
   "scripts": {
-    "dev": "tsx watch index.tsx",
-    "start": "tsx index.tsx"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "devDependencies": {
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/node": "^20.0.0"
   }
 }
